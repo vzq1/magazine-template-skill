@@ -1,76 +1,83 @@
 # Component catalog
 
-All sizes use `calc(N*var(--u))`, where `--u` equals 1 px of an 816 × 1056 page. The starter file shows every component in context. Copy from there.
+All sizes use `calc(N*var(--u))`, where `--u` is 1px of an 816 × 1056 page. Every component appears in context in `assets/starter.html`. Copy from there.
 
-## Page frame
+## Fonts
+
+| Token | Face | Use |
+|---|---|---|
+| `--display` | Bodoni Moda | Headlines, big numbers, pull quotes, folio numbers. 19u and up only. |
+| `--sans` | Libre Franklin | Kickers, labels, captions, tables, chart text, card titles |
+| `--serif` | Source Serif 4 | Body text, decks, notes |
+
+## Page frames (archetypes; see layouts.md)
 
 | Class | Use |
 |---|---|
-| `section.sheet > article.page` | One printed page. Flex column with a 20 u gap between direct children. |
-| `.page.cover` | Cover variant. It has no padding and uses `.cv-top` (dark band) plus `.cv-bottom` (cover lines and credits). |
-| `.rh` | Running head. Left: part name. Right: `.board` section label. |
-| `.folio` | Footer with the running title and page number (`<b>`). |
-| `.board` | Signboard label in the accent colour. Use it for section names, cover page numbers, and horizon labels. |
+| `section.sheet > article.page` | One page. Flex column with a 22u gap. |
+| `.page.cover` with `.cv-top`, `.cv-bottom` | Cover |
+| `.page.flush` + `.band` (`.cob`, `.sig`) + `.ghost` + `.partno` | Opener band |
+| `.page.split` + `.panel` (`.sig`) + `.mainc` | Panel split. Position the folio with `style="left:calc(336*var(--u))"`. |
+| `.page.railed` + `.rail > span` + `.railmain` | Rail. Position the folio with `style="left:calc(180*var(--u))"`. |
+| `.band` with negative bottom margin inside a normal page | Dark bottom band. Use `.folio.inv` on that page. |
+| `.rh` | Running head. Leave it out on openers and split pages. |
+| `.folio`, `.folio.inv` | Footer with a 24u page number |
+| `.board` | Signboard label: section names and page references |
 
 ## Type
 
-| Class | Use |
-|---|---|
-| `.kicker` | Small mono label with an accent dash above a headline. |
-| `.h1` | Page headline, condensed display, 50 u. Keep it to two or three lines. |
-| `.h2`, `.h3` | Subheads and card titles. |
-| `.dek` | Italic deck under or beside the headline. |
-| `.lead` | First paragraph with a display-face drop cap. |
-| `.lab` | Uppercase mono label for legends, table labels, and small headings. |
-| `.quote` | Pull quote with an accent quotation mark. |
-| `.big-stat` | Giant condensed number. Use one per page at most. |
-| `.small`, `.mute`, `.num` | Smaller text, muted colour, tabular figures. |
-
-## Layout
-
-| Class | Use |
-|---|---|
-| `.g` + `.c3`…`.c12` | 12-column grid. Spans must add up to 12 per row. |
-| `.stack`, `.row` | Vertical or horizontal flex with a gap. |
-| `.cols2` | Two text columns for long body copy. |
+| Class | Size | Use |
+|---|---|---|
+| `.h1` | 58u | Page headline. `<em>` gives italic blue emphasis. |
+| `.h1.xl` | 92u | Opener and panel headlines |
+| `.h2` | 28u | Subheads |
+| `.h3` | 16.5u sans | Card and list titles |
+| `.kicker` | 12.5u sans caps | Label above a headline |
+| `.dek` | 19u italic serif | Deck |
+| `.lead` | body + drop cap | First paragraph |
+| `.pull` | 26u italic display | Pull quote with a yellow rule |
+| `.stat`, `.big-stat` | 46u, 150u | Numbers |
+| `.lab` | 12u sans caps | Labels |
+| `.small` | 13.5u | Secondary text. Never smaller. |
 
 ## Content blocks
 
-| Class | Content shape | Notes |
-|---|---|---|
-| `.tl` | Dated milestones (a real sequence) | Six columns by default. Change `repeat(6,…)` for more or fewer. |
-| `.flow > .step` | Numbered process | Chevron steps. Add `.skip` for a step that some cases skip. |
-| `.units > .unit` | Five parallel categories with icons | Change the column count to match the number of items. |
-| `.vals > .val` | Two-by-two icon list (values, principles) | |
-| `.swot > .sw.s/.w/.o/.t` | SWOT grid | Each quadrant has its own fill. A large ghost letter sits in `.L`. |
-| `.prob` | Lettered problem → evidence → response | Use it for justification sections. |
-| `.layers > .layer` | Stacked layers (architecture layers, tiers) | |
-| `.kpis > .kpi` | Three KPI tiles, each with a mini bullet or bar chart | |
-| `.lanes > .lane(.pipe/.fut) > .card` | Status columns (current / pipeline / future) | The lane style shows status: solid, blue, or dashed. |
-| `.cert` | Four-item checklist with icons | Use for compliance items and requirements. |
-| `.org`, `.org-top`, `.bus`, `.org-cols`, `.ob` | Org chart | `.ob.lead-b` marks a leadership box. |
-| `.toc` | Contents list drawn as a line of stops | |
-| `.note` (`.warn`) | Icon callout | `.warn` turns the icon red. |
-| `.tbl` | Data table | `.k` bolds a key cell. `.c` centres a cell. |
-| `.dot.full/.view/.part`, `.appr`, `.dash` | Marks for access or coverage matrices | |
-| `.tag.fund/.arch/.strat/.new` | Category tags | Rename the categories to fit the paper's framework. |
-| `.fig` + `.cap` | Figure wrapper and numbered caption | |
-| `.back` | Dark back-cover band at the bottom of the last page | |
+| Class | Content shape |
+|---|---|
+| `.g` + `.c3`–`.c12` | 12-column grid |
+| `.cols2` | Two-column body text |
+| `.vtl` | Vertical timeline (dated milestones) |
+| `.urow` | Icon rows for parallel categories |
+| `.flow > .step > .chev + p` | Numbered process (place inside a dark `.band`). Add `.skip` for an exception step. |
+| `.vals > .val` | Icon tiles (values, principles) |
+| `.swot > .sw.s/.w/.o/.t` | SWOT grid that fills the page |
+| `.prob` | Lettered problem, evidence, and fix |
+| `.layer` | Stacked architecture layers |
+| `.kpis > .kpi` | 2 × 2 KPI tiles with mini charts |
+| `.card`, `.card.pipe`, `.card.fut` | Status cards. The border style shows status: thin, blue, or dashed. |
+| `.chk` | Checklist row with an icon (check `#i-check` or cross `#i-x`) |
+| `.org-top`, `.bus`, `.org-cols`, `.ob`, `.ob.lead-b` | Org chart |
+| `.toc` | Contents drawn as route stops |
+| `.note`, `.note.warn` | Icon callout |
+| `.swatch` | Legend row for "How to read this issue" |
+| `.tbl`, `.tbl.big` | Tables (13.5u or 14.5u). `.k` bolds a cell. `.c` centres it. |
+| `.dot.full/.view/.part`, `.appr`, `.dash` | Marks for matrices. Always add a legend. |
+| `.tag.fund/.arch/.strat/.new` | Category tags. Each differs in fill and outline as well as colour. |
+| `.fig` + `.cap` | Figure and numbered caption |
+| `.refs`, `.back` | References and back cover |
 
 ## Placeholders
 
-| Class | Meaning |
-|---|---|
-| `.tbd` | Missing fact that must be supplied. Renders with yellow stripes. |
-| `.sample` | Badge for a chart that uses invented values. |
-| `[brackets]` | Starter text that has not been replaced yet. |
+- `.tbd`: missing fact, shown with stripes and a dashed outline
+- `.sample`: chart uses invented values
+- `[brackets]`: starter text not yet replaced
 
 ## Icons (`#i-…`)
 
-events, activ, comms, digital, prod, users, shield, db, bell, link, file, lock, chart, flag, clock, check, alert, chat, heart, eye, route, cloud, hdd, target, layers, cpu
+events, activ, comms, digital, prod, users, shield, db, bell, link, lock, flag, clock, check, x, alert, heart, eye, hdd, layers, cpu, target
 
-## SVG colour classes
+## SVG classes
 
-- Fills: `f-ink f-paper f-tint f-cob f-cobs f-sig f-sigs f-risk f-risks f-ok f-none`
-- Strokes: `s-ink s-line s-mute s-cob s-sig s-risk s-paper`
-- Text: `t-ink t-mute t-white t-cob t-risk`, plus `t-disp` for the display face
+- Fills: `f-ink f-paper f-tint f-cob f-cobs f-sig f-sigs f-or f-ors f-teal f-none f-h1 f-h2 f-h3 f-h4`
+- Strokes: `s-ink s-line s-cob s-sig s-or s-paper`
+- Text: `t-ink t-mute t-white t-cob t-or`, plus `t-disp` for the display face

@@ -1,103 +1,110 @@
 ---
 name: magazine-template
-description: Turn an academic paper, report, or case study into a print-ready, tech-magazine-style layout (Letter-size HTML pages that export to PDF), with diagrams, charts, timelines, numbered processes, and category layouts. Use when someone asks to make a paper "magazine style", build a magazine template for a paper, redesign a deliverable as a magazine or e-copy, or fill/update an existing magazine template with final content. Also covers folding a professor's or reviewer's comments into the new version.
+description: Turn an academic paper, report, or case study into a print-ready, tech-magazine-style layout (Letter-size HTML pages that export to PDF), with magazine typography, varied page layouts, diagrams, charts, timelines, numbered processes, and category layouts, readable by older and colour-blind readers. Use when someone asks to make a paper "magazine style", build a magazine template for a paper, redesign a deliverable as a magazine or e-copy, or fill or update an existing magazine template with final content. Also covers folding a professor's or reviewer's comments into the new version.
 ---
 
 # Magazine Template
 
-Builds a multi-page magazine edition of a paper. The output is one HTML file. Each printed page is a fixed 8.5 × 11 in sheet that scales on screen, and the file exports to a PDF that matches the screen.
+Builds a multi-page magazine edition of a paper. The output is one HTML file in which each printed page is a fixed 8.5 × 11 in sheet that scales on screen. The file exports to a PDF that matches the screen.
+
+Three standards apply to every page:
+1. **It looks like a magazine.** Use magazine typography, and vary the layouts from page to page.
+2. **Everyone can read it.** That includes older readers, colour-blind readers, and anyone holding a black-and-white printout.
+3. **No page is half empty and nothing overflows.**
 
 Bundled files:
 
-- `assets/starter.html` holds the full page system and 11 starter pages with placeholder content. Always start from a copy. Never edit the asset itself.
-- `references/components.md` is a catalog of every component class, what it is for, and when to use it.
-- `references/charts.md` has the SVG chart recipes with the scale formulas, so every mark is drawn to scale.
-- `scripts/export-pdf.sh` renders the HTML to a Letter PDF with headless Chrome. Use it to check the layout and to produce the final file.
+| File | Purpose |
+|---|---|
+| `assets/starter.html` | Page system, type and colour tokens, icon set, and 13 starter pages, one for each archetype. Always start from a copy. |
+| `references/layouts.md` | The seven page archetypes, variation rules, fill rules, and a typical page flow. Read it before planning pages. |
+| `references/accessibility.md` | Type-size floor, contrast, colour-blind-safe colour rules, and the palette and its jobs. Read it before changing colours or sizes. |
+| `references/components.md` | Catalog of component classes. |
+| `references/charts.md` | SVG chart recipes with scale formulas and label sizes. |
+| `scripts/render-pages.sh` | Screenshots every page into contact sheets so you can check fit. |
+| `scripts/export-pdf.sh` | Renders the final Letter PDF. |
 
 ## Workflow
 
 ### 1. Gather the inputs
 
 Collect what exists before designing anything:
+- the paper or draft, even if unfinished
+- the rubric or the reviewer's comments
+- interview notes and data
+- the names for the cover
+- who will read it, for example an older professor or a print copy
 
-- the paper or draft, even if it is unfinished
-- the rubric, assignment brief, or reviewer/professor comments
-- interview notes, data, or appendices the paper draws on
-- names for the cover: authors, instructor, course, institution
-
-If the content is not final, build the template anyway. Fill it with the real content you have, and mark everything else as a placeholder (step 6).
+If the content is not final, build anyway. Use the real content that exists and mark the gaps (step 6).
 
 ### 2. Research references
 
-Search the web for tech and editorial magazine layouts. Useful queries include "tech magazine template InDesign", "Wired magazine layout grid", and "magazine infographic spread". Note the grid, type pairing, figure and caption conventions, and how the charts share a page with copy. Google Images links the user pastes usually cannot be fetched, so run your own searches instead. List the sources you used when you report back.
+Search the web for tech and editorial magazine layouts, for example "tech magazine template InDesign", "Wired magazine layout grid", and "magazine infographic spread". Note how grids, captions, and charts share a page. Pasted Google Images links usually cannot be fetched, so run your own searches and list the sources you used.
 
-### 3. Pick a visual identity from the subject
+### 3. Set the identity
 
-Replace the starter's motif and token values. Keep the token names. Decide these four things:
+- **Typography: magazine faces, three roles.**
+  - Headlines and big numbers: a high-contrast didone display, Bodoni Moda at 700–900. Use italic for emphasis inside headlines and decks.
+  - Labels, captions, tables, and chart text: a newsmagazine gothic, Libre Franklin at 500–800.
+  - Body text: a sturdy reading serif, Source Serif 4.
 
-- **Motif.** Choose one graphic idea from the subject's own world and repeat it: on the cover, the contents, the section markers, and the back cover. For a Philippine agency formerly named after the jeepney, the motif was a jeepney route line, with sections as stops and section labels as yellow route signboards. For a logistics firm it might be a shipping lane; for a hospital, a patient pathway. The starter's line-and-stops SVG is a placeholder for the motif.
-- **Palette.** Use four to six tokens, and give each colour a job. Write the jobs down and keep to them. For example: accent = section markers and one category, data blue = charts and a second category, red = risk only, green = positive outcomes only.
-- **Type.** Use a display face with a width axis for headlines (starter: Archivo, condensed at `font-stretch:72%`), a serif for body text (Source Serif 4), and a mono for labels, captions, and data (IBM Plex Mono). Load them from Google Fonts only.
-- **Masthead.** Give the magazine a short one-word name tied to the motif. The starter uses `MASTHEAD+`.
+  Load them from Google Fonts only. Do not use monospace for reading text. Swap faces only for ones in the same roles.
+- **Motif.** Pick one graphic idea from the subject's own world and repeat it on the cover, contents, section markers, and back cover. For a jeepney-born agency, the motif was a route line with stops and signboard-yellow labels. The starter's line-and-stops SVG is a placeholder.
+- **Palette.** Keep the token names, and give each colour one job. Follow `references/accessibility.md`: contrast of 7:1 or higher for body text, no red-versus-green pairs, and every colour backed by a word, shape, or line style.
+- **Masthead.** Choose one short word tied to the motif. Set the trailing mark in heavy sans, because Bodoni hairlines vanish.
 
-Avoid generic AI looks: warm cream with a serif and terracotta, purple-to-blue gradients, emoji as icons, and identical rounded cards everywhere.
+Avoid generic AI looks: cream with a serif and terracotta, purple gradients, emoji icons, and identical rounded cards.
 
-### 4. Plan the pages before writing HTML
+### 4. Plan the pages
 
-Make a page map. Each row lists the page number, the paper section, the main visual, and which reviewer comment the page answers. Rules:
-
-- **Match the visual to the content.** Numbers become charts. A real sequence becomes a numbered process or timeline. Categories become lanes, matrices, or tagged cards. Comparisons become tables or a 2×2. Use numbered markers only when the order is real.
-- **Vary the layouts.** Consecutive pages should not share the same structure. Mix full-width figures, 7/5 and 8/4 splits, giant stats, and tables.
-- **Answer every comment on a page.** Give each reviewer comment its own visible answer. Add a "Revision notes" table on the contents page that maps each comment to the page that answers it.
-- **Size the issue to the content.** A full course paper usually runs 12–18 pages: cover, contents with the executive summary, the section pages, and references with the back cover.
+Write a page map before any HTML. Each row has the page number, archetype, paper section, main visual, and the reviewer comment it answers. Follow `references/layouts.md`:
+- **Archetypes:** never use the same one on two pages in a row. Move the headline around. Rotate band and panel colours. Leave the running head off openers and split pages.
+- **Visuals follow the content:** numbers become charts, a real sequence becomes a numbered process or timeline, categories become lanes, cards, or a 2×2, and comparisons become tables.
+- **Reviewer comments:** give each one a visible answer. Add a "What changed" table that maps each comment to its page, and a "How to read this issue" legend.
+- **Page count:** at readable sizes, a course paper runs 24–30 pages. That is expected. Do not shrink the type to save pages.
 
 ### 5. Build
 
-1. Copy `assets/starter.html` to the working folder under a descriptive name.
-2. Update the `:root` tokens, `<title>`, masthead, and motif SVG.
-3. For each planned page, copy the closest starter `<section class="sheet">` and replace its content. Keep the page anatomy the same on every page:
-   - running head (`.rh`) with the part name and a `.board` section label
-   - kicker, headline, and a deck or lead
-   - content
-   - folio (`.folio`) with the page number
-4. Number figures in order (`Fig. 1`, `Fig. 2`, …). Every caption should name its source.
-5. Size everything with `calc(N*var(--u))`. `--u` is one CSS pixel of an 816 px page, so pages scale as one unit. SVG charts use their own `viewBox` units.
-6. Icons are line symbols defined at the top of the file. Use them with `<svg class="ic"><use href="#i-name"/></svg>`. Add new symbols in the same style: 24 × 24 grid, stroke only, `currentColor`.
+1. Copy `assets/starter.html` and rename it.
+2. Set the tokens, `<title>`, masthead, and motif.
+3. For each planned page, copy the starter page of that archetype and replace its content.
+4. Size everything with `calc(N*var(--u))`, where `--u` is 1px of an 816px page.
+5. Make each SVG `viewBox` width equal to its rendered width in `u` (see `references/charts.md`), so chart text stays at its true size.
+6. Number figures in order. Every caption names its source.
+7. Use icons with `<svg class="ic"><use href="#i-name"/></svg>`. Add new ones as stroke-only symbols on a 24 × 24 grid.
 
 ### 6. Keep the data honest
 
-- Use only figures that come from the paper, the sources, or arithmetic on them. Show the arithmetic in the caption or the note: rate × hours, compounding, percentages.
-- Mark missing facts inline with `<span class="tbd">what is needed</span>`. They render as striped yellow highlights, so they are easy to find and impossible to miss in a draft.
-- Badge any chart drawn with invented values with `<span class="sample">Sample data</span>`. Never present sample values as findings.
-- Label the group's own judgments (ratings, owners, durations) as proposed or as the group's assessment.
-- When two sources disagree (for example, a growth target in one deliverable and a different one in an interview), use the more recent source. Flag the conflict to the user.
+- Use only figures from the sources, or arithmetic on them, and show the arithmetic.
+- Mark missing facts with `<span class="tbd">what is needed</span>`. Badge invented chart values with `<span class="sample">Sample</span>`.
+- Label the group's own judgments (ratings, owners, durations) as proposed.
+- When sources conflict, use the more recent one, show the conflict on the page, and tell the user.
 
-### 7. Check the render
-
-Pages have a fixed height and hide overflow. Content that runs long is silently cut off, so always check:
+### 7. Check every page
 
 ```bash
-scripts/export-pdf.sh path/to/magazine.html /tmp/check.pdf
+scripts/render-pages.sh magazine.html <page-count> /tmp/render
 ```
 
-Then look at the pages. On macOS, `qlmanage -t -s 1200 -o /tmp /tmp/check.pdf` makes a thumbnail of page 1. For every page, a headless Chrome screenshot at `--window-size=900,<pages×1088>` of the file works, wrapped in `<!doctype html>` as the export script does. Fix these problems:
+Then view each `pages-N.png`. Fix these problems:
+- **Overflow:** text cut off at the bottom, or a card hidden.
+- **Dead space:** more than about 15% blank at the page bottom. Add real content from the fill list in `layouts.md`.
+- **Repetition:** two pages in a row with the same structure.
+- **Collisions:** chart labels crossing lines or running out of their area.
+- **Too-small text:** anything under the floor in `accessibility.md`.
 
-- text cut off at the bottom of a page
-- SVG labels running past their quadrant or bar
-- a page that is mostly empty
-
-Shorten the copy before you shrink the type. Body text should not go below 8.5 u.
+Downscaled contact sheets can make vertical text look like a solid bar. If something looks wrong, render that page alone at full size before changing it.
 
 ### 8. Deliver
 
-- Export the final PDF with `scripts/export-pdf.sh`. The PDF is Letter-size with backgrounds included.
-- To print by hand instead, open the HTML in Chrome and print with these settings: Letter, margins None, "Background graphics" on.
-- If the session can publish web pages (for example, Claude artifacts), publish the HTML so teammates can view it. Note that the page file must not include its own `<html>`/`<body>` tags. The starter already follows that rule.
-- In the reply, list three things: the page map, which reviewer comments each page answers, and every open placeholder or data conflict the group must resolve.
+- Export with `scripts/export-pdf.sh magazine.html out.pdf`. To print by hand from Chrome: Letter, margins None, Background graphics on.
+- If the session can publish web pages (for example, Claude artifacts), publish the HTML. The file has no `<html>`/`<body>` tags of its own.
+- In the reply, report three things: the page map, which page answers each reviewer comment, and every open placeholder or data conflict.
 
-## Writing rules for the copy
+## Copy rules
 
-- Headlines state the finding ("Coordination: shared project data, distinct services"), not the topic ("Operating Model").
-- Use plain, direct sentences, one idea each. Use a formal tone for academic or client deliverables.
-- Captions are short: what the figure shows, then the source.
-- No lorem ipsum. Starter placeholders use [square brackets] so a search for `[` finds anything left unfilled.
+- Headlines state the finding ("Coordination: shared data, distinct services"), not the topic.
+- Use short, plain sentences with one idea each. Use a formal tone for academic or client work.
+- Shorter copy is part of readability. When a page is too full, cut words before anything else.
+- Captions say what the figure shows, then the source.
+- Placeholders use [square brackets], so a search for `[` finds anything left unfilled.

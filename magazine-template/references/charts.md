@@ -1,61 +1,69 @@
 # Chart recipes
 
-Charts are hand-written inline SVG. Each one has a fixed `viewBox`, so it scales with the page. Before placing marks, define one linear scale per axis. Every tick label must name a value the scale actually reaches.
+Charts are inline SVG. Each one follows three rules:
 
-A linear scale maps a value to a position: `pos = start + (value − min) × (length ÷ (max − min))`.
+1. **Set the `viewBox` width to the rendered width in `u`.** Full width = 704, c8 = 443, c7 = 402, c6 = 342, c5 = 282, c4 = 241. One viewBox unit then equals 1u, so `font-size="12"` really is 12u (9pt).
+2. **Chart text is at least 12u.** Axis titles and series labels are 13–15u at weight 700.
+3. **One linear scale per axis.** `pos = start + (value − min) × length / (max − min)`. Every tick label names a value the scale reaches.
 
-## Horizontal bars and range bars (`viewBox 0 0 400 190`)
+For accessibility, label series directly on the chart instead of only in a legend. Give each series a second cue besides colour: a fill versus an outline, a dash pattern, a marker shape, or a word.
 
-- The label column is x 0–130. The plot runs from x 140 to 390, which is 250 units wide.
-- Scale for 0 to `max`: `x(v) = 140 + v × 250 / max`.
-- For a range bar, use `x = x(low)` and `width = x(high) − x(low)`.
-- Rows sit 30 units apart. Bars are 14 high.
-- Gridlines and ticks go at every `max / 5`.
+## Range or horizontal bars (`viewBox 0 0 704 300`)
 
-Worked example with `max = 5000`: `x(2804) = 280.2` and `x(4205) = 350.25`, so `width = 70.05`.
+- The label column is x 0–220: the name at 15u bold, a sub-label at 12.5u. The plot runs from x 240 to 680 (440 units).
+- `x(v) = 240 + v × 440 / max`. Width is `x(high) − x(low)`. Rows are 50 apart and bars are 28 high.
+- Put the value label just after the bar. Put it inside the bar in white when it would run past x 690.
+- Worked example with `max = 5000`: `x(2804) = 486.8` and `x(4205) = 610.0`.
 
-## Line chart with a range band (`viewBox 0 0 470 180`)
+## Cost versus benefit bars (`viewBox 0 0 704 160`)
 
-- X positions are evenly spaced, for example 60, 190, 320, 450.
-- Y scale: `y(v) = bottom − (v − vmin) × (height / (vmax − vmin))`.
-- The band is a `polygon` that runs along the upper series left to right, then back along the lower series right to left.
-- Compounding: `index_n = 100 × (1 + r)^n`. For example, at r = 0.2 the index runs 100, 120, 144, 172.8.
+- Labels are x 0–140 and the bars start at x 150. Scale: `w = v × 540 / max`.
+
+## Line chart with a band (`viewBox 0 0 443 260`)
+
+- The x positions are evenly spaced. `y(v) = bottom − (v − vmin) × height / (vmax − vmin)`.
+- Draw the band as a `polygon`: along the upper series left to right, then back along the lower series.
+- Series cues: solid line with circle markers versus dashed line with square markers.
+- Put end labels where nothing else is. Below a dashed line is usually clear.
+- Compounding: `100 × (1 + r)^n`.
 
 ## Donut (`viewBox 0 0 42 42`)
 
-- Use `r = 15.915`. The circumference is then 100, so dash lengths equal percentages.
-- Draw each segment as its own `circle` with `stroke-dasharray="p (100−p)"`.
-- Set `stroke-dashoffset` to `25 − (sum of the earlier segments)`. The first segment uses 25, which starts it at 12 o'clock.
-- The segments must add up to 100.
+- With `r = 15.915` the circumference is 100. Set `stroke-dasharray="p 100−p"` and `stroke-dashoffset = 25 − (sum of earlier segments)`.
+- Always pair it with a table of the values. The donut is decoration for the table.
 
-## 2×2 matrix (`viewBox 0 0 340 300`)
+## 2×2 matrix (`viewBox 0 0 402 380`)
 
-- The plot area is x 50–330 and y 10–260. Each quadrant is 140 × 125.
-- Tint the quadrant the subject sits in with `f-sigs`, and place a marker circle there.
-- Quadrant glosses must fit in 130 units: about 28 characters at font-size 8.
+- The plot is x 60–392 and y 6–326. Each quadrant is 166 × 160.
+- Quadrant title: 19u display. Gloss: two lines at 12.5u, each at most about 18 characters.
 
-## Heat map (`viewBox 0 0 330 290`)
+## Heat map (`viewBox 0 0 402 400`)
 
-- Cells are 86.7 × 80, starting at (60, 10). Columns run low → high likelihood. Rows run high → low impact.
-- Colour cells by likelihood × impact, scoring L = 1, M = 2, H = 3:
-  - `f-ok` for a score of 1–2
-  - `f-sigs` for 3–4
-  - `f-risks` for 6–9
-- Place risk markers inside their cell. Use filled markers for the priority zone.
+- Cells are 104 × 110, starting at (80, 10). Columns run low → high likelihood. Rows run high → low impact.
+- Colour by score (L = 1, M = 2, H = 3; score = L × I) on one sequential hue:
+  - `f-h1` for 1–2
+  - `f-h2` for 3–4
+  - `f-h3` for 6
+  - `f-h4` for 9
+- Print the score at the top-left of each cell.
+- Markers have r = 18 and 13u labels. Filled ink means priority. White with an outline means the rest.
 
 ## Gantt chart (`viewBox 0 0 704 H`)
 
-- The label column is x 0–220. Quarter `q` (0-based) starts at `x = 228 + 39q`, so 12 quarters fit across.
-- A bar from quarter `a` to quarter `b` (inclusive) uses `x = 230 + 39a` and `width = 39(b − a + 1) − 4`.
-- Row `i` has its label at `y = 84 + 28i` and its bar at `y = 72 + 28i`, 16 units high.
-- Horizon bands (short, medium, long) are tinted rectangles behind the year header.
-- Milestones are diamonds on their own row under the bars.
+- Label column x 0–230 at 13.5u. Quarter `q` starts at `x = 240 + 38q`, so 12 quarters fit across.
+- A bar from quarter `a` to quarter `b` uses `x = 242 + 38a` and `w = 38(b − a + 1) − 4`.
+- Row `i`: the bar is at `y = 88 + 34i` with height 20, and the label at `y = 102 + 34i`.
+- Header: horizon band (y 0–76) with SHORT/MEDIUM/LONG at 12.5u, years at 17u display, quarters at 12u.
+- Category cues: yellow with an outline, solid blue, white with a thick outline, pale dashed.
+- Milestones are diamonds on their own row, labelled at 12.5u.
 
-## Mini charts in KPI tiles (`viewBox 0 0 200 26`)
+## Stakeholder rings (`viewBox 0 0 342 342`)
 
-- **Bullet chart.** A track rectangle, a target band, and tick lines at the band edges. Add an actual-value bar when the data exists.
-- **Trend bars.** Small columns, with the latest one in `f-cob`.
+- Centre at (171, 171), with radii 168, 110, and 52.
+- Labels must fit their ring band. Split a long label onto two lines rather than shrink it.
 
-## Sensitivity table
+## Flow diagram (`viewBox 0 0 704 456`)
 
-Make it an HTML `.tbl`, not SVG. Shade the cells that fall below the cost with `--risk-soft`, and the base case with `--signal-soft`. State the formula in the caption.
+- Zones: shaded columns, each with a 12.5u caps label.
+- Nodes: boxes about 210 × 124 with a 21u display title and up to three 13u lines of about 22 characters each.
+- Arrows: 2.5 stroke with marker heads. Use dashed orange for manual or problem flows, and label them on a white backing box.
