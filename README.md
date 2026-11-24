@@ -1,6 +1,6 @@
 # magazine-template
 
-A Claude Code skill that turns a paper or report into a print-ready, tech-magazine-style layout. It builds calm, Letter-size HTML pages and exports them to PDF. The pages use serif-magazine typography, layouts that vary from page to page, diagrams, charts, timelines, and tables. They are built to be readable by older readers, colour-blind readers, and in black-and-white print. The skill also includes a three-reviewer quality check.
+A Claude Code skill that turns a paper or report into a real magazine edition. Pages are Letter-size HTML, shown as spreads on screen and exported to PDF. The output has magazine-density typography, illustrated openers, sidebars, pull quotes, infographics, and charts, and stays readable in print and for colour-blind readers. A three-reviewer quality check is included.
 
 ## Install
 
@@ -34,7 +34,8 @@ To update to the latest version, run `git pull` in the cloned folder and copy th
 | Path | What it is |
 |---|---|
 | `magazine-template/SKILL.md` | The workflow Claude follows |
-| `magazine-template/assets/starter.html` | Page system and 12 starter pages, one per layout archetype, plus an open-items page |
+| `magazine-template/assets/starter.html` | Page system, generated art, and 7 starter magazine pages |
+| `magazine-template/scripts/city_art.py` | Generates the transit-map illustration for the cover and openers |
 | `magazine-template/references/layouts.md` | Page archetypes, variation rules, fill rules, and clutter rules |
 | `magazine-template/references/accessibility.md` | Type-size floor, contrast, and colour-blind-safe colour rules |
 | `magazine-template/references/review.md` | Three-reviewer check: layout auditor, subject professor, editorial designer |

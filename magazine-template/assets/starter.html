@@ -2,25 +2,16 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,800&family=Libre+Franklin:wght@500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,800&family=Libre+Franklin:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
 <style>
-/* Layout: Letter magazine pages (816x1056 u), 12-column grid, fixed 56u side margins on every page.
-   Calm serif magazine: Source Serif 4 for headlines and body, Libre Franklin for labels, tables, numbers.
-   Bodoni Moda only on the ROUTE+ masthead. One accent colour per body page; signal yellow only on cover,
-   contents, part openers, back cover. Seven sizes: 72 / 48 / 44 / 24 / 16.5 / 14 / 13. */
+/* Layout: Letter pages (816x1056 u) shown as two-page spreads on wide screens. 12-column modular grid,
+   3-column justified body text. Calm serif magazine: Source Serif 4 display/body, Libre Franklin for
+   furniture (kickers, captions, sidebars, data). Bodoni only on the masthead. Ink + one data accent;
+   signal yellow only in the route motif (cover, openers, back). Print floor: body 13.5u (10pt), smallest 11u (8.25pt). */
 :root{
-  --desk:#22252B;
-  --paper:#FFFFFF;
-  --ink:#15171C;
-  --muted:#4D5562;
-  --rule:#D5D9E0;
-  --tint:#F3F4F6;
-  --cobalt:#1B42C4;
-  --cobalt-soft:#DCE3F8;
-  --signal:#FFC20E;
-  --alert:#B4470C;
-  --on-ink:#FFFFFF;
-  --on-ink-mute:#C3C8D2;
+  --desk:#1E2127;--paper:#FFFFFF;--ink:#15171C;--muted:#4D5562;--rule:#D5D9E0;--tint:#F2F3F5;
+  --cobalt:#1B42C4;--cobalt-soft:#DCE3F8;--signal:#FFC20E;--alert:#B4470C;
+  --on-ink:#FFFFFF;--on-ink-mute:#BCC2CD;
   --mast:"Bodoni Moda","Didot",Georgia,serif;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
   --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
@@ -28,441 +19,169 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--desk);color:var(--ink);font-family:var(--serif);padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.sheet{width:min(100%,816px);margin:0 auto 32px;container-type:inline-size;box-shadow:0 12px 40px rgba(0,0,0,.35)}
-.page{--u:calc(100cqi / 816);position:relative;aspect-ratio:816/1056;background:var(--paper);color:var(--ink);overflow:hidden;font:400 calc(17*var(--u))/1.5 var(--serif);font-optical-sizing:auto;padding:calc(76*var(--u)) calc(56*var(--u)) calc(88*var(--u));display:flex;flex-direction:column;gap:calc(26*var(--u))}
+.book{display:grid;grid-template-columns:minmax(0,816px);justify-content:center;row-gap:28px}
+@media (min-width:1180px){.book{grid-template-columns:repeat(2,minmax(0,700px));column-gap:3px;row-gap:44px}.book>.sheet:first-child{grid-column:2}}
+.sheet{container-type:inline-size;box-shadow:0 10px 34px rgba(0,0,0,.4);min-width:0}
+.page{--u:calc(100cqi / 816);position:relative;aspect-ratio:816/1056;background:var(--paper);color:var(--ink);overflow:hidden;font:400 calc(13.5*var(--u))/1.42 var(--serif);font-optical-sizing:auto;padding:calc(62*var(--u)) calc(52*var(--u)) calc(64*var(--u));display:flex;flex-direction:column;gap:calc(18*var(--u))}
 .page p{margin:0}
 svg{display:block;max-width:100%}
-.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
-/* running head: one label per page, numbered to the paper's sections */
-.rh{position:absolute;top:calc(30*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:700 calc(13*var(--u))/1 var(--sans);color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:calc(10*var(--u))}
-.rh span+span{font-weight:500;color:var(--muted)}
-.folio{position:absolute;bottom:calc(32*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:500 calc(13*var(--u))/1 var(--sans);color:var(--muted)}
-.folio b{font:700 calc(16.5*var(--u))/1 var(--sans);color:var(--ink)}
+.rh{position:absolute;top:calc(26*var(--u));left:calc(52*var(--u));right:calc(52*var(--u));display:flex;justify-content:space-between;font:700 calc(11*var(--u))/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.rh b{color:var(--ink)}
+.folio{position:absolute;bottom:calc(24*var(--u));left:calc(52*var(--u));right:calc(52*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:600 calc(11*var(--u))/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.folio b{font:800 calc(13*var(--u))/1 var(--sans);color:var(--ink);letter-spacing:0}
+.even .folio{flex-direction:row-reverse}
 .folio.inv{color:var(--on-ink-mute)}.folio.inv b{color:var(--on-ink)}
 
-/* type: seven sizes */
-.h1{font:600 calc(48*var(--u))/1.08 var(--serif);letter-spacing:-.012em;margin:0;text-wrap:balance}
-.h1.xl{font-size:calc(72*var(--u));line-height:1.02}
-.h2{font:600 calc(24*var(--u))/1.2 var(--serif);margin:0;text-wrap:balance}
-.h3{font:700 calc(16.5*var(--u))/1.3 var(--sans);margin:0}
-.dek{font-size:calc(21*var(--u));line-height:1.45;color:var(--muted)}
-.lab{font:700 calc(13*var(--u))/1.35 var(--sans);color:var(--muted)}
-.caps{font:700 calc(13*var(--u))/1.2 var(--sans);letter-spacing:.06em;text-transform:uppercase}
-.small{font-size:calc(15*var(--u));line-height:1.45}
+.kick{font:800 calc(11.5*var(--u))/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt)}
+.hed{font:700 calc(58*var(--u))/.98 var(--serif);letter-spacing:-.022em;margin:0;text-wrap:balance}
+.hed.xl{font-size:calc(92*var(--u));line-height:.92;letter-spacing:-.03em}
+.hed.l{font-size:calc(70*var(--u));line-height:.95}
+.hed.m{font-size:calc(40*var(--u));line-height:1.02}
+.hed.s{font-size:calc(26*var(--u));line-height:1.08;letter-spacing:-.01em}
+.dek{font:400 calc(18*var(--u))/1.38 var(--serif);color:var(--muted);text-wrap:pretty}
+.by{font:700 calc(11*var(--u))/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.by span{color:var(--muted);font-weight:600}
+.sub{font:800 calc(12.5*var(--u))/1.3 var(--sans);letter-spacing:.04em;margin:calc(10*var(--u)) 0 calc(3*var(--u))!important;break-after:avoid}
 .sans{font-family:var(--sans)}
 .mute{color:var(--muted)}
 .num{font-variant-numeric:tabular-nums lining-nums}
-.stat{white-space:nowrap;font:700 calc(var(--sz,44)*var(--u))/1 var(--sans);font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.01em}
-.body p+p{margin-top:.7em}
-.cols2{column-count:2;column-gap:calc(28*var(--u))}
-.pull{font:600 calc(24*var(--u))/1.35 var(--serif);border-top:2px solid var(--ink);padding-top:calc(14*var(--u));text-wrap:balance}
-.lead::first-letter{font:600 calc(58*var(--u))/.8 var(--serif);float:left;margin:calc(7*var(--u)) calc(8*var(--u)) 0 0}
 
-/* grid */
-.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(20*var(--u));row-gap:calc(20*var(--u))}
+.cols3{column-count:3;column-gap:calc(18*var(--u))}
+.cols2{column-count:2;column-gap:calc(20*var(--u))}
+.txt{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.txt p+p{text-indent:1.2em}
+.txt .sub+p{text-indent:0}
+.drop::first-letter{font:700 calc(56*var(--u))/.82 var(--serif);float:left;margin:calc(4*var(--u)) calc(6*var(--u)) 0 0;color:var(--cobalt)}
+.end::after{content:"";display:inline-block;width:.6em;height:.6em;background:var(--signal);margin-left:.3em;vertical-align:baseline}
+.pq{font:600 calc(23*var(--u))/1.18 var(--serif);letter-spacing:-.01em;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:calc(10*var(--u)) 0 calc(12*var(--u));margin:calc(4*var(--u)) 0 calc(10*var(--u))!important;break-inside:avoid;text-align:left;text-indent:0!important}
+.pq cite{display:block;font:700 calc(11*var(--u))/1.3 var(--sans);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:calc(8*var(--u))}
+
+.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(18*var(--u));row-gap:calc(16*var(--u))}
 .g>*{min-width:0}
-.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
-.stack{display:flex;flex-direction:column;gap:calc(12*var(--u))}
-.row{display:flex;gap:calc(12*var(--u));align-items:center}
-.ruled{border-top:2px solid var(--ink);padding-top:calc(12*var(--u))}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c9{grid-column:span 9}.c12{grid-column:span 12}
+.stack{display:flex;flex-direction:column;gap:calc(10*var(--u))}
+.row{display:flex;gap:calc(10*var(--u));align-items:center}
+.ruled{border-top:2px solid var(--ink);padding-top:calc(8*var(--u))}
+.hair{border-top:1px solid var(--rule);padding-top:calc(8*var(--u))}
 
-/* figures */
-.fig{display:flex;flex-direction:column;gap:calc(10*var(--u))}
-.cap{font:500 calc(13*var(--u))/1.45 var(--sans);color:var(--muted);border-top:1px solid var(--rule);padding-top:calc(8*var(--u))}
-.cap b{color:var(--ink);font-weight:700;margin-right:.4em}
+.fig{display:flex;flex-direction:column;gap:calc(7*var(--u))}
+.cap{font:400 calc(11.5*var(--u))/1.38 var(--sans);color:var(--muted)}
+.cap b{color:var(--ink);font-weight:800}
 .fig svg text{font-family:var(--sans)}
 .t-ink{fill:var(--ink)}.t-mute{fill:var(--muted)}.t-white{fill:var(--on-ink)}.t-cob{fill:var(--cobalt)}.t-alert{fill:var(--alert)}
-.t-serif{font-family:var(--serif)!important;font-weight:600}
-.f-paper{fill:var(--paper)}.f-tint{fill:var(--tint)}.f-ink{fill:var(--ink)}.f-cob{fill:var(--cobalt)}.f-cobs{fill:var(--cobalt-soft)}.f-sig{fill:var(--signal)}.f-none{fill:none}
+.t-serif{font-family:var(--serif)!important;font-weight:700}
+.f-paper{fill:var(--paper)}.f-tint{fill:var(--tint)}.f-ink{fill:var(--ink)}.f-cob{fill:var(--cobalt)}.f-cobs{fill:var(--cobalt-soft)}.f-sig{fill:var(--signal)}.f-none{fill:none}.f-rule{fill:var(--rule)}
 .s-ink{stroke:var(--ink)}.s-rule{stroke:var(--rule)}.s-cob{stroke:var(--cobalt)}.s-sig{stroke:var(--signal)}.s-alert{stroke:var(--alert)}.s-paper{stroke:var(--paper)}.s-mute{stroke:var(--muted)}
 
-/* tables */
-.tbl{width:100%;border-collapse:collapse;font:400 calc(15*var(--u))/1.4 var(--sans)}
-.tbl th{font:700 calc(13*var(--u))/1.3 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:left;padding:calc(8*var(--u)) calc(8*var(--u)) calc(8*var(--u)) 0;border-bottom:2px solid var(--ink);vertical-align:bottom}
-.tbl td{padding:calc(11*var(--u)) calc(10*var(--u)) calc(11*var(--u)) 0;border-bottom:1px solid var(--rule);vertical-align:top}
-.tbl td.c,.tbl th.c{text-align:center;padding-left:calc(6*var(--u));padding-right:calc(6*var(--u))}
+.box p{text-indent:0!important}
+.box{text-align:left;background:var(--tint);padding:calc(14*var(--u)) calc(16*var(--u));font:400 calc(12.5*var(--u))/1.45 var(--sans);display:flex;flex-direction:column;gap:calc(7*var(--u));break-inside:avoid}
+.box h4{font:800 calc(11.5*var(--u))/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt);margin:0}
+.box.ink{background:var(--ink);color:var(--on-ink)}.box.ink h4{color:var(--signal)}
+.qa p{margin:0}
+.qa .q{font-weight:800}
+.qa .a+.q{margin-top:calc(6*var(--u))}
+
+.tbl{width:100%;border-collapse:collapse;font:400 calc(12*var(--u))/1.35 var(--sans)}
+.tbl th{font:800 calc(11*var(--u))/1.25 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:calc(6*var(--u)) calc(8*var(--u)) calc(6*var(--u)) 0;border-bottom:2px solid var(--ink);vertical-align:bottom}
+.tbl td{padding:calc(7*var(--u)) calc(8*var(--u)) calc(7*var(--u)) 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl .c{text-align:center;padding-left:calc(4*var(--u));padding-right:calc(4*var(--u))}
 .tbl .k{font-weight:700}
-
-/* placeholders: plain brackets */
+.tbl .r{text-align:right}
 .tbd{color:var(--muted)}
-
-/* one tag style */
-.tag{display:inline-block;font:700 calc(13*var(--u))/1 var(--sans);padding:calc(5*var(--u)) calc(8*var(--u));border:1.5px solid var(--ink);white-space:nowrap}
+.tag{display:inline-block;font:800 calc(11*var(--u))/1 var(--sans);letter-spacing:.04em;padding:calc(4*var(--u)) calc(6*var(--u));border:1.5px solid var(--ink);white-space:nowrap}
 .tag.fund{border-color:var(--cobalt);color:var(--cobalt)}
 .tag.strat{border-style:dashed}
+.stat{font:800 calc(var(--sz,40)*var(--u))/.95 var(--sans);letter-spacing:-.02em;font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}
+.lab{font:700 calc(11.5*var(--u))/1.3 var(--sans);color:var(--muted)}
+.dot{display:inline-block;width:calc(11*var(--u));height:calc(11*var(--u));border-radius:50%;vertical-align:middle}
+.dot.full{background:var(--ink)}.dot.view{border:calc(2.5*var(--u)) solid var(--ink)}.dot.part{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);border:calc(1.8*var(--u)) solid var(--ink)}
 
-/* opener band */
-.page.flush{padding-top:0}
-.band{margin:0 calc(-56*var(--u));padding:calc(64*var(--u)) calc(56*var(--u)) calc(34*var(--u));background:var(--ink);color:var(--on-ink);display:flex;flex-direction:column;gap:calc(16*var(--u))}
-.band .partno{font:700 calc(13*var(--u))/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
-.band .dek{color:var(--on-ink-mute);max-width:calc(580*var(--u))}
-.band .route{margin-top:calc(6*var(--u))}
+/* art pages */
+.art{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.page.bleed{padding:0;display:block;background:var(--ink);color:var(--on-ink)}
+.overlay{position:absolute;left:calc(52*var(--u));right:calc(52*var(--u));display:flex;flex-direction:column;gap:calc(14*var(--u))}
+.overlay .dek{color:var(--on-ink-mute)}
+.plate{background:var(--ink);padding:calc(20*var(--u)) calc(22*var(--u))}
+.mast{font:800 calc(150*var(--u))/.8 var(--mast);letter-spacing:-.02em;color:var(--on-ink)}
+.mast span{color:var(--signal);font-family:var(--sans);font-weight:800}
+.coverline{border-top:2px solid var(--signal);padding-top:calc(6*var(--u))}
+.coverline b{display:block;font:800 calc(12*var(--u))/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+.coverline span{font:600 calc(19*var(--u))/1.15 var(--serif);color:var(--on-ink)}
 
-/* panel split */
-.page.split{padding:0;display:grid;grid-template-columns:calc(300*var(--u)) minmax(0,1fr);gap:0}
-.panel{background:var(--ink);color:var(--on-ink);padding:calc(76*var(--u)) calc(34*var(--u)) calc(88*var(--u)) calc(56*var(--u));display:flex;flex-direction:column;gap:calc(18*var(--u))}
-.mainc{padding:calc(76*var(--u)) calc(56*var(--u)) calc(88*var(--u)) calc(36*var(--u));display:flex;flex-direction:column;gap:calc(22*var(--u));min-width:0}
+.toc a{color:inherit;text-decoration:none}
+.toc .e{display:grid;grid-template-columns:calc(38*var(--u)) minmax(0,1fr);gap:calc(8*var(--u));padding:calc(9*var(--u)) 0;border-top:1px solid var(--rule)}
+.toc .e b{font:800 calc(22*var(--u))/1 var(--sans);color:var(--cobalt)}
+.toc .e strong{display:block;font:700 calc(17*var(--u))/1.15 var(--serif)}
+.toc .e span{font:400 calc(11.5*var(--u))/1.35 var(--sans);color:var(--muted)}
+.toc .part{font:800 calc(11.5*var(--u))/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:calc(14*var(--u)) 0 calc(6*var(--u))}
 
-/* side column with real content */
-.page.side{display:grid;grid-template-columns:calc(220*var(--u)) minmax(0,1fr);column-gap:calc(32*var(--u))}
-.sidecol{display:flex;flex-direction:column;gap:calc(16*var(--u));border-right:1px solid var(--rule);padding-right:calc(24*var(--u))}
-.maincol{display:flex;flex-direction:column;gap:calc(22*var(--u));min-width:0}
+.big{white-space:nowrap;font:800 calc(var(--sz,64)*var(--u))/.9 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums}
+.num-tile{display:flex;flex-direction:column;gap:calc(6*var(--u));border-top:2px solid var(--ink);padding-top:calc(10*var(--u))}
+.num-tile p{font:400 calc(12.5*var(--u))/1.35 var(--sans)}
 
-/* cover */
-.cover{padding:0;display:block}
-.cv-top{position:absolute;inset:0 0 auto 0;height:calc(640*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) 0;display:flex;flex-direction:column}
-.cv-issue{display:flex;justify-content:space-between;font:500 calc(13*var(--u))/1 var(--sans);color:var(--on-ink-mute);border-bottom:1px solid #3A3F49;padding-bottom:calc(12*var(--u))}
-.mast{font:800 calc(156*var(--u))/.82 var(--mast);letter-spacing:-.02em;margin-top:calc(28*var(--u))}
-.mast span{color:var(--signal);font-family:var(--sans);font-weight:700}
-.cv-tag{font:500 calc(16.5*var(--u))/1.3 var(--sans);color:var(--on-ink-mute);margin-top:calc(14*var(--u))}
-.cv-route{margin:calc(12*var(--u)) calc(-56*var(--u)) 0;width:calc(100% + 112*var(--u));max-width:none}
-.cv-route text{font-family:var(--sans);font-weight:700}
-.cv-head{font:600 calc(56*var(--u))/1.05 var(--serif);margin:calc(10*var(--u)) 0 0;max-width:calc(620*var(--u));text-wrap:balance}
-.cv-bottom{position:absolute;inset:calc(640*var(--u)) 0 0 0;padding:calc(30*var(--u)) calc(56*var(--u)) calc(30*var(--u));display:flex;flex-direction:column;justify-content:space-between}
-.cv-lines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(20*var(--u))}
-.cv-line{display:flex;flex-direction:column;gap:calc(6*var(--u));border-top:2px solid var(--ink);padding-top:calc(10*var(--u))}
-.cv-line b{font:700 calc(13*var(--u))/1 var(--sans);color:var(--muted)}
-.cv-line .h2{font-size:calc(20*var(--u))}
-.cv-credit{display:grid;grid-template-columns:2fr 1fr 1fr;gap:calc(20*var(--u));border-top:1px solid var(--rule);padding-top:calc(12*var(--u));font:500 calc(13*var(--u))/1.45 var(--sans)}
-
-/* contents */
-.toc{display:flex;flex-direction:column}
-.toc .part{font:700 calc(13*var(--u))/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);margin:calc(18*var(--u)) 0 calc(4*var(--u))}
-.toc .part:first-child{margin-top:0}
-.toc .stp{display:flex;justify-content:space-between;align-items:baseline;gap:calc(10*var(--u));padding:calc(8*var(--u)) 0;border-bottom:1px solid var(--rule);font:500 calc(16.5*var(--u))/1.25 var(--sans)}
-.toc .stp i{font-style:normal;color:var(--muted);margin-right:calc(8*var(--u))}
-.toc .stp em{font:700 calc(16.5*var(--u))/1 var(--sans);font-style:normal}
-
-/* components */
-.vtl{display:flex;flex-direction:column;border-left:3px solid var(--ink);padding-left:calc(20*var(--u));gap:calc(24*var(--u))}
-.vtl b{display:block;font:700 calc(24*var(--u))/1 var(--sans)}
-.vtl p{font-size:calc(17*var(--u));line-height:1.4;margin-top:calc(4*var(--u))!important}
-.urow{display:grid;grid-template-columns:calc(200*var(--u)) minmax(0,1fr);gap:calc(16*var(--u));padding:calc(18*var(--u)) 0;border-bottom:1px solid var(--rule);align-items:baseline}
-.urow b{font:600 calc(24*var(--u))/1.1 var(--serif)}
-.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(10*var(--u))}
-.step{display:flex;flex-direction:column;gap:calc(6*var(--u));border-top:3px solid var(--signal);padding-top:calc(10*var(--u))}
-.step b{font:700 calc(16.5*var(--u))/1.2 var(--sans)}
-.step p{font-size:calc(14*var(--u));line-height:1.4;color:var(--on-ink-mute)}
-.step.skip{border-top-style:dashed}
-.ob{border:1.5px solid var(--ink);padding:calc(7*var(--u)) calc(6*var(--u));text-align:center}
-.ob b{display:block;font:700 calc(14*var(--u))/1.2 var(--sans)}
-.ob span{display:block;font:500 calc(13*var(--u))/1.25 var(--sans);color:var(--muted);margin-top:calc(2*var(--u))}
+.ob{border:1.2px solid var(--ink);padding:calc(9*var(--u)) calc(4*var(--u));text-align:center;background:var(--paper)}
+.ob b{display:block;font:700 calc(11.5*var(--u))/1.2 var(--sans)}
+.ob span{display:block;font:400 calc(11*var(--u))/1.2 var(--sans);color:var(--muted)}
 .ob.lead-b{background:var(--ink);color:var(--on-ink)}.ob.lead-b span{color:var(--on-ink-mute)}
-.org-top{display:grid;grid-template-columns:1fr minmax(0,1.3fr) 1fr;gap:calc(20*var(--u));align-items:end}
-.org-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(12*var(--u))}
-.org-col{display:flex;flex-direction:column;gap:calc(6*var(--u));position:relative;padding-top:calc(16*var(--u))}
-.org-col::before{content:"";position:absolute;top:0;left:50%;height:calc(16*var(--u));border-left:2px solid var(--ink)}
-.org-col .hd{font:700 calc(14*var(--u))/1.2 var(--sans);text-align:center;padding:calc(7*var(--u)) calc(4*var(--u));border-bottom:3px solid var(--ink)}
-.bus{height:calc(18*var(--u));margin:0 12.5%;border:2px solid var(--ink);border-bottom:0;position:relative}
-.bus::before{content:"";position:absolute;left:50%;top:calc(-20*var(--u));height:calc(20*var(--u));border-left:2px solid var(--ink)}
-.quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--ink);flex:1}
-.quad>div{padding:calc(18*var(--u)) calc(20*var(--u)) calc(18*var(--u)) 0;display:flex;flex-direction:column;gap:calc(8*var(--u))}
-.quad>div:nth-child(2n){padding-left:calc(20*var(--u));padding-right:0;border-left:1px solid var(--rule)}
-.quad>div:nth-child(n+3){border-top:1px solid var(--rule)}
-.quad ul{margin:0;padding-left:calc(20*var(--u));display:flex;flex-direction:column;gap:calc(10*var(--u));font-size:calc(18*var(--u))}
-.prob{display:grid;grid-template-columns:calc(44*var(--u)) minmax(0,1fr);gap:calc(14*var(--u));padding:calc(22*var(--u)) 0;border-bottom:1px solid var(--rule)}
-.prob .m{font:700 calc(24*var(--u))/1.1 var(--sans);color:var(--cobalt)}
-.prob .ev{font:500 calc(15*var(--u))/1.45 var(--sans);color:var(--muted);margin-top:calc(4*var(--u))!important}
-.prob .re{margin-top:calc(6*var(--u))!important}
-.prob .re b{font-family:var(--sans)}
-.note{padding:calc(16*var(--u)) calc(20*var(--u));background:var(--tint);font-size:calc(17*var(--u));line-height:1.45}
-.note b{font-family:var(--sans)}
-.dot{display:inline-block;width:calc(15*var(--u));height:calc(15*var(--u));border-radius:50%;vertical-align:middle}
-.dot.full{background:var(--ink)}
-.dot.view{border:calc(3*var(--u)) solid var(--ink)}
-.dot.part{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);border:calc(2*var(--u)) solid var(--ink)}
-.dash{color:var(--muted);font-weight:700}
-.chk{display:grid;grid-template-columns:calc(30*var(--u)) minmax(0,1fr);gap:calc(10*var(--u));padding:calc(16*var(--u)) 0;border-bottom:1px solid var(--rule);align-items:baseline}
-.chk .ic{font-size:calc(22*var(--u));transform:translateY(calc(4*var(--u)))}
-.princ{display:grid;grid-template-columns:calc(40*var(--u)) minmax(0,1fr);gap:calc(12*var(--u));padding:calc(20*var(--u)) 0;border-bottom:1px solid var(--rule)}
-.princ>b{font:700 calc(24*var(--u))/1.1 var(--sans);color:var(--cobalt)}
-.refs p{padding-left:2.2em;text-indent:-2.2em;font-size:calc(16*var(--u));line-height:1.55}
-.refs p+p{margin-top:calc(12*var(--u))}
+.orgcol{display:flex;flex-direction:column;gap:calc(9*var(--u))}
+.orgcol h5{margin:0 0 calc(2*var(--u));font:800 calc(11.5*var(--u))/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;border-bottom:3px solid var(--ink);padding-bottom:calc(5*var(--u));display:flex;gap:calc(6*var(--u));align-items:center}
+.orgcol h5 .ic{font-size:calc(16*var(--u));color:var(--cobalt)}
+
+.princ{display:grid;grid-template-columns:calc(54*var(--u)) minmax(0,1fr);gap:calc(12*var(--u));padding:calc(12*var(--u)) 0;border-top:1px solid #3A3F49}
+.princ b{font:800 calc(40*var(--u))/.9 var(--sans);color:var(--signal)}
+.princ h3{margin:0;font:700 calc(22*var(--u))/1.1 var(--serif);color:var(--on-ink)}
+.princ p{font:400 calc(12.5*var(--u))/1.4 var(--sans);color:var(--on-ink-mute);margin-top:calc(3*var(--u))!important}
+
+.refs p{padding-left:2em;text-indent:-2em;font:400 calc(11.5*var(--u))/1.45 var(--sans)}
+.refs p+p{margin-top:calc(6*var(--u))}
 .refs a{color:var(--cobalt);word-break:break-all}
-.back{position:absolute;left:0;right:0;bottom:0;height:calc(300*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) calc(30*var(--u));display:flex;flex-direction:column;justify-content:space-between}
 
 @media print{
   body{background:none;padding:0}
+  .book{display:block}
   .sheet{width:8.5in;margin:0;box-shadow:none;break-after:page}
   @page{size:letter;margin:0}
 }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+<symbol id="i-events" viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11"/><path d="M12 9.5l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/></symbol>
+<symbol id="i-activ" viewBox="0 0 24 24"><path d="M4 10h16l-1.5-5h-13z"/><path d="M5 10v10h14V10M9 20v-5h6v5"/></symbol>
+<symbol id="i-comms" viewBox="0 0 24 24"><path d="M4 10v4h3l7 4V6l-7 4z"/><path d="M17.5 9a4 4 0 010 6M7 14l1 5h2.5l-1-4.4"/></symbol>
+<symbol id="i-digital" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4M7 12l3-3 2 2 4-4"/></symbol>
+<symbol id="i-prod" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="11" rx="1"/><path d="M3 9l2-5 15 .5L21 9M8 4.3L10 9M13.5 4.5L15.5 9"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+<symbol id="person" viewBox="0 0 20 28"><circle cx="10" cy="6" r="5"/><path d="M1 27v-7a9 9 0 0118 0v7z"/></symbol>
 </svg>
-
-
-<!-- =====================================================================
-     STARTER PAGES. One <section class="sheet"> = one printed page.
-     Each page is labelled with its ARCHETYPE; never use the same one twice in a row.
-     Running heads carry the paper's own section numbers (I, II.1, III.3 ...).
-     [Brackets] mark placeholders; list every one on the Open items page.
-     ===================================================================== -->
-
-<!-- ===== ARCHETYPE: COVER ===== -->
-<section class="sheet"><article class="page cover">
-  <div class="cv-top">
-    <div class="cv-issue"><span>[Course · Course title]</span><span>[Issue · Deliverable]</span><span>[Month Year]</span></div>
-    <div class="mast">MASTHEAD<span>+</span></div>
-    <div class="cv-tag">[One line: what the paper reviews, and for which organization]</div>
-    <svg class="cv-route" viewBox="0 0 816 150" role="img" aria-label="Motif line connecting the main parts">
-      <path d="M0 104H250L300 54H730" class="f-none s-sig" stroke-width="10" stroke-linejoin="round"/>
-      <g class="f-paper s-ink" stroke-width="5"><circle cx="80" cy="104" r="10"/><circle cx="190" cy="104" r="10"/><circle cx="390" cy="54" r="10"/><circle cx="520" cy="54" r="10"/><circle cx="650" cy="54" r="10"/></g>
-      <g class="t-white" font-size="14" text-anchor="middle"><text x="80" y="140">[Stop]</text><text x="190" y="140">[Stop]</text><text x="390" y="28">[Stop]</text><text x="520" y="28">[Stop]</text><text x="650" y="28">[Stop]</text></g>
-      <rect x="730" y="32" width="60" height="44" rx="3" class="f-sig"/><text x="760" y="62" text-anchor="middle" font-size="22" class="t-ink">[X]</text>
-    </svg>
-    <h1 class="cv-head">[Cover headline: the main claim in under ten words]</h1>
-  </div>
-  <div class="cv-bottom">
-    <div class="cv-lines">
-      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
-      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
-      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
-      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
-    </div>
-    <div class="cv-credit">
-      <div><div class="lab">Submitted by</div>[Surname, Given Name] · [Surname, Given Name]</div>
-      <div><div class="lab">Submitted to</div>[Instructor]</div>
-      <div><div class="lab">Institution</div>[University]</div>
-    </div>
-  </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cityA" viewBox="0 0 800 800"><rect width="800" height="800" fill="#15171C"/><rect x="405" y="165" width="70" height="30" fill="#1D212A"/><rect x="685" y="125" width="70" height="30" fill="#2F3B66"/><rect x="245" y="45" width="30" height="110" fill="#1D212A"/><rect x="285" y="85" width="110" height="110" fill="#1D212A"/><rect x="725" y="725" width="70" height="30" fill="#FFC20E"/><rect x="45" y="685" width="30" height="70" fill="#1D212A"/><rect x="685" y="205" width="30" height="30" fill="#1D212A"/><rect x="685" y="85" width="110" height="30" fill="#232834"/><rect x="605" y="685" width="70" height="70" fill="#232834"/><rect x="565" y="445" width="70" height="30" fill="#1B42C4"/><rect x="365" y="765" width="30" height="30" fill="#232834"/><rect x="205" y="405" width="30" height="110" fill="#1D212A"/><rect x="85" y="685" width="110" height="70" fill="#1D212A"/><rect x="85" y="85" width="70" height="110" fill="#232834"/><rect x="365" y="485" width="70" height="30" fill="#2F3B66"/><rect x="445" y="205" width="110" height="30" fill="#232834"/><rect x="245" y="365" width="30" height="30" fill="#1D212A"/><rect x="605" y="85" width="30" height="110" fill="#1D212A"/><rect x="165" y="85" width="30" height="30" fill="#1D212A"/><rect x="285" y="5" width="70" height="30" fill="#1D212A"/><rect x="5" y="165" width="70" height="70" fill="#232834"/><rect x="485" y="485" width="30" height="110" fill="#232834"/><rect x="45" y="245" width="30" height="30" fill="#232834"/><rect x="125" y="5" width="110" height="30" fill="#232834"/><rect x="445" y="765" width="30" height="30" fill="#2F3B66"/><rect x="765" y="485" width="30" height="70" fill="#2F3B66"/><rect x="605" y="365" width="30" height="30" fill="#1D212A"/><rect x="405" y="325" width="70" height="30" fill="#232834"/><rect x="245" y="645" width="70" height="30" fill="#232834"/><rect x="5" y="645" width="70" height="30" fill="#232834"/><rect x="325" y="645" width="70" height="30" fill="#1D212A"/><rect x="285" y="685" width="110" height="70" fill="#232834"/><rect x="765" y="245" width="30" height="110" fill="#1B42C4"/><rect x="285" y="245" width="110" height="110" fill="#1D212A"/><rect x="5" y="5" width="70" height="110" fill="#1D212A"/><rect x="445" y="85" width="30" height="30" fill="#1D212A"/><rect x="245" y="405" width="30" height="110" fill="#232834"/><rect x="605" y="205" width="70" height="70" fill="#1D212A"/><rect x="205" y="205" width="30" height="30" fill="#1D212A"/><rect x="525" y="245" width="30" height="30" fill="#1D212A"/><rect x="45" y="445" width="70" height="110" fill="#2F3B66"/><rect x="645" y="165" width="110" height="30" fill="#232834"/><rect x="5" y="565" width="30" height="30" fill="#1B42C4"/><rect x="165" y="205" width="30" height="110" fill="#232834"/><rect x="245" y="325" width="30" height="30" fill="#232834"/><rect x="645" y="285" width="110" height="70" fill="#2F3B66"/><rect x="125" y="485" width="70" height="70" fill="#1D212A"/><rect x="285" y="525" width="30" height="30" fill="#232834"/><rect x="405" y="525" width="30" height="70" fill="#1D212A"/><rect x="565" y="5" width="70" height="70" fill="#232834"/><path d="M0 0V800M40 0V800M80 0V800M120 0V800M160 0V800M200 0V800M240 0V800M280 0V800M320 0V800M360 0V800M400 0V800M440 0V800M480 0V800M520 0V800M560 0V800M600 0V800M640 0V800M680 0V800M720 0V800M760 0V800M800 0V800M0 0H800M0 40H800M0 80H800M0 120H800M0 160H800M0 200H800M0 240H800M0 280H800M0 320H800M0 360H800M0 400H800M0 440H800M0 480H800M0 520H800M0 560H800M0 600H800M0 640H800M0 680H800M0 720H800M0 760H800M0 800H800" stroke="#15171C" stroke-width="10"/><path d="M0 760L760 0" stroke="#15171C" stroke-width="14"/><path d="M-10 600H240L320 520H480V280H800" fill="none" stroke="#7F97E8" stroke-width="10" stroke-linejoin="round"/><path d="M200 -10V200L280 280H560L640 360V810" fill="none" stroke="#FFC20E" stroke-width="16" stroke-linejoin="round"/><circle cx="200" cy="120" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="280" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="420" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="560" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="480" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="680" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="120" cy="600" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="400" cy="520" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="480" cy="400" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="680" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/></symbol><symbol id="cityB" viewBox="0 0 800 800"><rect width="800" height="800" fill="#15171C"/><rect x="205" y="525" width="70" height="70" fill="#232834"/><rect x="245" y="605" width="110" height="30" fill="#232834"/><rect x="285" y="5" width="30" height="70" fill="#2F3B66"/><rect x="525" y="85" width="30" height="30" fill="#2F3B66"/><rect x="45" y="525" width="70" height="110" fill="#1D212A"/><rect x="405" y="685" width="70" height="30" fill="#232834"/><rect x="445" y="5" width="30" height="30" fill="#1D212A"/><rect x="5" y="565" width="30" height="70" fill="#1D212A"/><rect x="165" y="205" width="30" height="110" fill="#2F3B66"/><rect x="285" y="85" width="30" height="30" fill="#232834"/><rect x="725" y="85" width="30" height="110" fill="#232834"/><rect x="485" y="245" width="70" height="30" fill="#2F3B66"/><rect x="525" y="365" width="70" height="110" fill="#232834"/><rect x="405" y="605" width="70" height="70" fill="#1D212A"/><rect x="85" y="205" width="70" height="30" fill="#232834"/><rect x="685" y="765" width="110" height="30" fill="#232834"/><rect x="205" y="205" width="70" height="70" fill="#1D212A"/><rect x="765" y="365" width="30" height="30" fill="#1D212A"/><rect x="45" y="645" width="30" height="110" fill="#2F3B66"/><rect x="205" y="725" width="30" height="70" fill="#232834"/><rect x="485" y="285" width="30" height="30" fill="#232834"/><rect x="565" y="525" width="70" height="30" fill="#2F3B66"/><rect x="45" y="325" width="70" height="30" fill="#1D212A"/><rect x="165" y="165" width="70" height="30" fill="#1D212A"/><rect x="645" y="605" width="30" height="30" fill="#2F3B66"/><rect x="605" y="725" width="70" height="70" fill="#1D212A"/><rect x="725" y="325" width="30" height="30" fill="#1D212A"/><rect x="165" y="5" width="70" height="70" fill="#232834"/><rect x="725" y="525" width="70" height="110" fill="#1B42C4"/><rect x="485" y="125" width="30" height="30" fill="#232834"/><rect x="165" y="85" width="30" height="70" fill="#1D212A"/><rect x="685" y="405" width="70" height="110" fill="#2F3B66"/><rect x="765" y="205" width="30" height="30" fill="#2F3B66"/><rect x="245" y="685" width="30" height="30" fill="#1B42C4"/><rect x="5" y="485" width="70" height="30" fill="#1D212A"/><rect x="725" y="205" width="30" height="70" fill="#FFC20E"/><rect x="765" y="405" width="30" height="30" fill="#1D212A"/><rect x="365" y="365" width="110" height="110" fill="#2F3B66"/><rect x="125" y="685" width="110" height="30" fill="#232834"/><rect x="85" y="765" width="70" height="30" fill="#1D212A"/><rect x="405" y="525" width="30" height="30" fill="#232834"/><rect x="565" y="645" width="110" height="30" fill="#232834"/><rect x="485" y="85" width="30" height="30" fill="#1D212A"/><rect x="285" y="485" width="70" height="70" fill="#232834"/><rect x="85" y="45" width="70" height="30" fill="#232834"/><rect x="365" y="765" width="70" height="30" fill="#1D212A"/><rect x="245" y="365" width="70" height="30" fill="#1D212A"/><rect x="445" y="725" width="30" height="70" fill="#1D212A"/><rect x="5" y="405" width="110" height="70" fill="#2F3B66"/><rect x="165" y="645" width="30" height="30" fill="#232834"/><rect x="765" y="325" width="30" height="30" fill="#FFC20E"/><rect x="5" y="85" width="110" height="30" fill="#1D212A"/><rect x="565" y="565" width="30" height="30" fill="#2F3B66"/><rect x="645" y="45" width="70" height="30" fill="#1D212A"/><rect x="685" y="285" width="30" height="110" fill="#2F3B66"/><rect x="5" y="725" width="30" height="30" fill="#232834"/><rect x="605" y="405" width="30" height="70" fill="#1D212A"/><rect x="45" y="205" width="30" height="110" fill="#1D212A"/><rect x="485" y="205" width="30" height="30" fill="#1D212A"/><path d="M0 0V800M40 0V800M80 0V800M120 0V800M160 0V800M200 0V800M240 0V800M280 0V800M320 0V800M360 0V800M400 0V800M440 0V800M480 0V800M520 0V800M560 0V800M600 0V800M640 0V800M680 0V800M720 0V800M760 0V800M800 0V800M0 0H800M0 40H800M0 80H800M0 120H800M0 160H800M0 200H800M0 240H800M0 280H800M0 320H800M0 360H800M0 400H800M0 440H800M0 480H800M0 520H800M0 560H800M0 600H800M0 640H800M0 680H800M0 720H800M0 760H800M0 800H800" stroke="#15171C" stroke-width="10"/><path d="M0 760L760 0" stroke="#15171C" stroke-width="14"/><path d="M-10 600H240L320 520H480V280H800" fill="none" stroke="#7F97E8" stroke-width="10" stroke-linejoin="round"/><path d="M200 -10V200L280 280H560L640 360V810" fill="none" stroke="#FFC20E" stroke-width="16" stroke-linejoin="round"/><circle cx="200" cy="120" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="280" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="420" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="560" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="480" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="680" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="120" cy="600" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="400" cy="520" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="480" cy="400" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="680" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/></symbol><symbol id="cityC" viewBox="0 0 800 800"><rect width="800" height="800" fill="#15171C"/><rect x="125" y="5" width="70" height="30" fill="#1D212A"/><rect x="125" y="685" width="30" height="110" fill="#1D212A"/><rect x="85" y="245" width="30" height="30" fill="#232834"/><rect x="685" y="525" width="30" height="110" fill="#232834"/><rect x="5" y="205" width="70" height="70" fill="#1D212A"/><rect x="245" y="405" width="30" height="30" fill="#1D212A"/><rect x="445" y="445" width="110" height="70" fill="#1B42C4"/><rect x="565" y="685" width="30" height="110" fill="#1D212A"/><rect x="365" y="765" width="70" height="30" fill="#232834"/><rect x="45" y="285" width="70" height="30" fill="#2F3B66"/><rect x="125" y="485" width="70" height="110" fill="#232834"/><rect x="445" y="205" width="70" height="70" fill="#1D212A"/><rect x="325" y="85" width="110" height="30" fill="#232834"/><rect x="285" y="205" width="70" height="110" fill="#1D212A"/><rect x="685" y="285" width="70" height="30" fill="#1D212A"/><rect x="45" y="405" width="70" height="70" fill="#1D212A"/><rect x="725" y="405" width="30" height="110" fill="#1D212A"/><rect x="565" y="165" width="70" height="30" fill="#1D212A"/><rect x="685" y="685" width="70" height="110" fill="#2F3B66"/><rect x="645" y="605" width="30" height="30" fill="#2F3B66"/><rect x="165" y="205" width="70" height="30" fill="#1D212A"/><rect x="685" y="5" width="30" height="70" fill="#1B42C4"/><rect x="205" y="565" width="30" height="70" fill="#FFC20E"/><rect x="205" y="645" width="30" height="70" fill="#2F3B66"/><rect x="645" y="765" width="30" height="30" fill="#1D212A"/><rect x="125" y="445" width="70" height="30" fill="#1D212A"/><rect x="725" y="85" width="30" height="110" fill="#1B42C4"/><rect x="685" y="165" width="30" height="110" fill="#2F3B66"/><rect x="245" y="685" width="30" height="70" fill="#1D212A"/><rect x="445" y="565" width="110" height="110" fill="#1D212A"/><rect x="5" y="85" width="30" height="30" fill="#1D212A"/><rect x="325" y="605" width="30" height="30" fill="#232834"/><rect x="605" y="525" width="30" height="30" fill="#1D212A"/><rect x="565" y="45" width="30" height="30" fill="#1D212A"/><rect x="405" y="125" width="30" height="30" fill="#1D212A"/><rect x="325" y="565" width="30" height="30" fill="#232834"/><rect x="685" y="125" width="30" height="30" fill="#FFC20E"/><rect x="605" y="245" width="70" height="30" fill="#1D212A"/><rect x="5" y="485" width="70" height="110" fill="#1D212A"/><rect x="365" y="245" width="30" height="30" fill="#1B42C4"/><rect x="45" y="45" width="110" height="110" fill="#232834"/><rect x="645" y="205" width="30" height="30" fill="#2F3B66"/><rect x="85" y="765" width="30" height="30" fill="#1D212A"/><rect x="325" y="485" width="30" height="70" fill="#232834"/><rect x="85" y="685" width="30" height="70" fill="#1D212A"/><rect x="445" y="85" width="30" height="70" fill="#1D212A"/><rect x="685" y="365" width="30" height="30" fill="#1D212A"/><rect x="165" y="325" width="30" height="110" fill="#232834"/><rect x="525" y="685" width="30" height="30" fill="#1D212A"/><rect x="165" y="685" width="30" height="70" fill="#232834"/><rect x="365" y="445" width="30" height="70" fill="#1D212A"/><rect x="765" y="165" width="30" height="30" fill="#FFC20E"/><rect x="205" y="525" width="30" height="30" fill="#1B42C4"/><rect x="405" y="525" width="30" height="70" fill="#1D212A"/><rect x="365" y="285" width="30" height="30" fill="#232834"/><rect x="485" y="405" width="70" height="30" fill="#FFC20E"/><rect x="685" y="405" width="30" height="30" fill="#2F3B66"/><rect x="485" y="725" width="30" height="70" fill="#1D212A"/><path d="M0 0V800M40 0V800M80 0V800M120 0V800M160 0V800M200 0V800M240 0V800M280 0V800M320 0V800M360 0V800M400 0V800M440 0V800M480 0V800M520 0V800M560 0V800M600 0V800M640 0V800M680 0V800M720 0V800M760 0V800M800 0V800M0 0H800M0 40H800M0 80H800M0 120H800M0 160H800M0 200H800M0 240H800M0 280H800M0 320H800M0 360H800M0 400H800M0 440H800M0 480H800M0 520H800M0 560H800M0 600H800M0 640H800M0 680H800M0 720H800M0 760H800M0 800H800" stroke="#15171C" stroke-width="10"/><path d="M0 760L760 0" stroke="#15171C" stroke-width="14"/><path d="M-10 600H240L320 520H480V280H800" fill="none" stroke="#7F97E8" stroke-width="10" stroke-linejoin="round"/><path d="M200 -10V200L280 280H560L640 360V810" fill="none" stroke="#FFC20E" stroke-width="16" stroke-linejoin="round"/><circle cx="200" cy="120" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="280" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="420" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="560" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="480" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="640" cy="680" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="120" cy="600" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="400" cy="520" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="480" cy="400" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/><circle cx="680" cy="280" r="13" fill="#FFFFFF" stroke="#15171C" stroke-width="6"/></symbol></svg>
+<div class="book">
+<section class="sheet"><article class="page odd bleed" lang="en"><svg class="art" viewBox="80 0 640 828" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cityA" width="800" height="800"/></svg>
+<div class="overlay" style="top:calc(30*var(--u))"><div class="row" style="justify-content:space-between;font:700 calc(11*var(--u))/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink)"><span>[Course]</span><span>[Issue · Month Year]</span></div><div class="mast">MASTHEAD<span>+</span></div></div>
+<div class="overlay" style="top:calc(250*var(--u));width:calc(250*var(--u))"><div class="plate stack" style="gap:calc(14*var(--u))"><div class="coverline"><b>[Section]</b><span>[Cover line]</span></div><div class="coverline"><b>[Section]</b><span>[Cover line]</span></div><div class="coverline"><b>[Section]</b><span>[Cover line]</span></div></div></div>
+<div class="overlay" style="bottom:calc(40*var(--u))"><div class="plate stack" style="gap:calc(10*var(--u))"><div class="kick" style="color:var(--signal)">[The ___ issue]</div><h1 class="hed l" style="color:var(--on-ink)">[Cover headline: the main claim]</h1><p class="by" style="color:var(--on-ink-mute)">[Subtitle: what the paper reviews]</p></div></div>
 </article></section>
-
-<!-- ===== ARCHETYPE: PANEL SPLIT (contents) ===== -->
-<section class="sheet"><article class="page split">
-  <div class="panel">
-    <div class="caps" style="color:var(--signal)">[Issue]</div>
-    <h1 class="h1" style="font-size:calc(56*var(--u))">Contents</h1>
-    <p class="dek" style="color:var(--on-ink-mute)">Section numbers follow the course paper format.</p>
-    <div class="stack" style="margin-top:auto;gap:calc(18*var(--u))">
-      <div><div class="stat" style="color:var(--signal)">00</div><div class="lab" style="color:var(--on-ink-mute)">[Key figure]</div></div>
-      <div><div class="stat" style="color:var(--signal)">00</div><div class="lab" style="color:var(--on-ink-mute)">[Key figure]</div></div>
-    </div>
-  </div>
-  <div class="mainc">
-    <nav class="toc">
-      <div class="stp"><span><i>I</i>Executive summary</span><em>03</em></div>
-      <div class="part">II · [Part]</div>
-      <div class="stp"><span><i>1</i>[Section]</span><em>04</em></div>
-      <div class="stp"><span><i>2</i>[Section]</span><em>05</em></div>
-      <div class="part">III · [Part]</div>
-      <div class="stp"><span><i>1</i>[Section]</span><em>07</em></div>
-      <div class="stp"><span><i>2</i>[Section]</span><em>08</em></div>
-      <div class="part">IV · [Part]</div>
-      <div class="stp"><span><i>A</i>[Section]</span><em>10</em></div>
-      <div class="stp"><span><i>V</i>Conclusion</span><em>11</em></div>
-      <div class="stp"><span><i>VI</i>References</span><em>12</em></div>
-    </nav>
-  </div>
-  <div class="folio" style="left:calc(336*var(--u))"><span>[Running title]</span><b>02</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: FEATURE (summary, conclusion) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>I · Executive summary</span><span>[Masthead · Issue]</span></div>
-  <h1 class="h1">[Headline that states the finding in one roman sentence]</h1>
-  <div class="g ruled" style="border-bottom:1px solid var(--rule);padding-bottom:calc(14*var(--u));--sz:38">
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-  </div>
-  <div class="body cols2">
-    <p class="lead">[Paragraph one. First letter becomes a drop cap.]</p>
-    <p>[Paragraph two.]</p>
-    <p>[Paragraph three.]</p>
-  </div>
-  <div class="note" style="margin-top:auto"><b>Recommendation.</b> [One or two sentences.]</div>
-  <div class="folio"><span>[Running title]</span><b>03</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: OPENER BAND (first page of each part) ===== -->
-<section class="sheet"><article class="page flush">
-  <div class="band">
-    <span class="partno">II · [Part name]</span>
-    <h1 class="h1 xl">[Part headline]</h1>
-    <p class="dek">[Deck that frames the part.]</p>
-    <svg class="route" viewBox="0 0 704 30" aria-hidden="true"><path d="M0 15H704" class="s-sig" stroke-width="6"/><g class="s-sig" stroke-width="4"><circle cx="20" cy="15" r="8" class="f-ink"/><circle cx="240" cy="15" r="9" class="f-sig"/><circle cx="460" cy="15" r="8" class="f-ink"/><circle cx="684" cy="15" r="8" class="f-ink"/></g></svg>
-  </div>
-  <div class="g">
-    <div class="c5 stack"><div class="lab" style="color:var(--ink)">II.1 · [Section]</div><p>[Short paragraph.]</p></div>
-    <div class="c7 stack"><div class="lab">[Label]</div><p class="pull">[Quoted statement.]</p></div>
-  </div>
-  <div class="g ruled" style="margin-top:auto">
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>04</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: HERO FIGURE (2x2 framework) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>II.2 · [Section]</span><span>[Framework, Author Year]</span></div>
-  <h1 class="h1">[Headline that names the placement]</h1>
-  <div class="g">
-    <div class="c7 fig">
-      <svg viewBox="0 0 402 380" role="img" aria-label="Two-by-two matrix">
-        <rect x="60" y="6" width="166" height="160" class="f-cobs"/><rect x="226" y="6" width="166" height="160" class="f-tint"/><rect x="60" y="166" width="166" height="160" class="f-tint"/><rect x="226" y="166" width="166" height="160" class="f-tint"/>
-        <path d="M226 6V326M60 166H392" class="s-paper" stroke-width="4"/><path d="M60 6V326H392" class="f-none s-ink" stroke-width="2"/>
-        <g font-size="20" class="t-ink t-serif"><text x="74" y="36">[Quadrant]</text><text x="240" y="36">[Quadrant]</text><text x="74" y="196">[Quadrant]</text><text x="240" y="196">[Quadrant]</text></g>
-        <circle cx="160" cy="120" r="26" class="f-cob"/><text x="160" y="127" text-anchor="middle" font-size="19" font-weight="700" class="t-white">[X]</text>
-        <g font-size="13" class="t-ink"><text x="226" y="372" text-anchor="middle" font-weight="700">[X axis] →</text><text transform="translate(22 166) rotate(-90)" text-anchor="middle" font-weight="700">[Y axis] →</text></g>
-      </svg>
-      <div class="cap"><b>Fig. 1</b>[Caption.]</div>
-    </div>
-    <div class="c5 stack" style="gap:calc(18*var(--u))">
-      <div><div class="h3">[Point]</div><p>[Evidence.]</p></div>
-      <div><div class="h3">[Point]</div><p>[Evidence.]</p></div>
-    </div>
-  </div>
-  <p class="pull">[Implication in one sentence.]</p>
-  <div class="g" style="margin-top:auto">
-    <div class="c6 ruled stack" style="gap:calc(6*var(--u))"><div class="h3">[Term]</div><p class="small">[Plain definition.]</p></div>
-    <div class="c6 ruled stack" style="gap:calc(6*var(--u))"><div class="h3">[Term]</div><p class="small">[Plain definition.]</p></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>05</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: SIDE COLUMN (table-led page) ===== -->
-<section class="sheet"><article class="page side">
-  <div class="rh"><span>II.3 · [Section]</span><span>[Topic]</span></div>
-  <div class="sidecol">
-    <h1 class="h1">[Headline]</h1>
-    <p class="dek">[Deck.]</p>
-    <p class="small">[Context sentence.]</p>
-  </div>
-  <div class="maincol">
-    <table class="tbl">
-      <thead><tr><th>[Column]</th><th>[Column]</th><th class="c">[Column]</th></tr></thead>
-      <tbody>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
-      </tbody>
-    </table>
-    <div class="stack ruled" style="margin-top:auto"><div class="h2">[Subhead]</div><p>[What this means.]</p></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>06</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: QUAD (SWOT or 2x2 lists) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>II.4 · SWOT and strategy</span><span>Business tools</span></div>
-  <div class="g" style="align-items:end"><h1 class="c7 h1">[SWOT headline]</h1><p class="c5 dek">[Where the points come from.]</p></div>
-  <div class="quad">
-    <div><span class="caps" style="color:var(--cobalt)">Strengths</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
-    <div><span class="caps" style="color:var(--cobalt)">Weaknesses</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
-    <div><span class="caps" style="color:var(--cobalt)">Opportunities</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
-    <div><span class="caps" style="color:var(--cobalt)">Threats</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>07</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: DATA SPREAD (bars + table) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>III.3 · Cost-benefit analysis</span><span>Costs</span></div>
-  <div class="g" style="align-items:end"><h1 class="c7 h1">[Headline with the key number]</h1><div class="c5 note"><b>[Basis.]</b> [Formula and source.]</div></div>
-  <div class="fig">
-    <svg viewBox="0 0 704 200" role="img" aria-label="Range bar chart">
-      <g class="s-rule" stroke-width="1.5"><path d="M240 6V162M328 6V162M416 6V162M504 6V162M592 6V162M680 6V162"/></g>
-      <g font-size="15" font-weight="700" class="t-ink"><text x="0" y="30">[Item A]</text><text x="0" y="80">[Item B]</text><text x="0" y="130">[Item C]</text></g>
-      <rect x="486.8" y="16" width="123.3" height="28" class="f-cob"/><rect x="425.1" y="66" width="61.7" height="28" class="f-cob"/><rect x="363.4" y="116" width="61.7" height="28" class="f-paper s-ink" stroke-width="2"/>
-      <g font-size="13.5" font-weight="700" class="t-ink"><text x="548" y="35" text-anchor="middle" class="t-white">[value]</text><text x="494" y="85">[value]</text><text x="433" y="135">[value]</text></g>
-      <g font-size="13" class="t-ink" text-anchor="middle"><text x="240" y="186">0</text><text x="328" y="186">1k</text><text x="416" y="186">2k</text><text x="504" y="186">3k</text><text x="592" y="186">4k</text><text x="680" y="186">5k</text></g>
-    </svg>
-    <div class="cap"><b>Fig. 2</b>[Caption with the colour and outline key in words.]</div>
-  </div>
-  <table class="tbl num">
-    <thead><tr><th>[Assumption]</th><th class="c">[Case]</th><th class="c">[Case]</th><th class="c">[Case]</th></tr></thead>
-    <tbody>
-      <tr><td class="k">[Low]</td><td class="c">[0] <span style="color:var(--alert);font-weight:700">· below cost</span></td><td class="c">[0]</td><td class="c">[0]</td></tr>
-      <tr><td class="k">[Base]</td><td class="c k" style="background:var(--cobalt-soft)">[0]</td><td class="c">[0]</td><td class="c">[0]</td></tr>
-    </tbody>
-  </table>
-  <div class="g ruled" style="margin-top:auto">
-    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
-    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
-    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>08</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: HERO FIGURE (heat map) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>III.4 · Risk analysis</span><span>Heat map</span></div>
-  <h1 class="h1">[Risk headline with a count]</h1>
-  <div class="g">
-    <div class="c7 fig">
-      <svg viewBox="0 0 402 400" role="img" aria-label="Risk heat map">
-        <g class="f-tint"><rect x="80" y="10" width="104" height="110"/><rect x="80" y="120" width="104" height="110"/><rect x="184" y="120" width="104" height="110"/><rect x="80" y="230" width="104" height="110"/><rect x="184" y="230" width="104" height="110"/><rect x="288" y="230" width="104" height="110"/></g>
-        <g class="f-cobs"><rect x="184" y="10" width="104" height="110"/><rect x="288" y="10" width="104" height="110"/><rect x="288" y="120" width="104" height="110"/></g>
-        <path d="M184 10V340M288 10V340M80 120H392M80 230H392" class="s-paper" stroke-width="4"/>
-        <circle cx="236" cy="65" r="18" class="f-ink"/><text x="236" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="t-white">R1</text>
-        <circle cx="236" cy="175" r="18" class="f-paper s-ink" stroke-width="2"/><text x="236" y="180" text-anchor="middle" font-size="13.5" font-weight="700" class="t-ink">R2</text>
-        <g font-size="13" class="t-ink" text-anchor="middle"><text x="132" y="360">Low</text><text x="236" y="360">Medium</text><text x="340" y="360">High</text><text x="236" y="390" font-weight="700">Likelihood →</text></g>
-        <g font-size="13" class="t-ink" text-anchor="end"><text x="72" y="69">High</text><text x="72" y="179">Medium</text><text x="72" y="289">Low</text></g>
-        <text transform="translate(18 175) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" class="t-ink">Impact →</text>
-      </svg>
-      <div class="cap"><b>Fig. 3</b>Blue cells: high-impact zone. Filled circles: priority risks.</div>
-    </div>
-    <div class="c5 stack" style="gap:calc(16*var(--u))"><p><b class="sans">[Priority.]</b> [Which risks come first.]</p><p><b class="sans">[Note.]</b> [Detail.]</p></div>
-  </div>
-  <table class="tbl" style="font-size:calc(16.5*var(--u))">
-    <thead><tr><th>Rating</th><th>Likelihood means</th><th>Impact means</th></tr></thead>
-    <tbody><tr><td class="k">High</td><td>[Definition]</td><td>[Definition]</td></tr><tr><td class="k">Medium</td><td>[Definition]</td><td>[Definition]</td></tr><tr><td class="k">Low</td><td>[Definition]</td><td>[Definition]</td></tr></tbody>
-  </table>
-  <div class="folio"><span>[Running title]</span><b>09</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: HERO FIGURE (Gantt roadmap) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>IV.D · Roadmap</span><span>[Years]</span></div>
-  <h1 class="h1">[Roadmap headline]</h1>
-  <div class="fig">
-    <svg viewBox="0 0 704 240" role="img" aria-label="Gantt chart by quarter">
-      <rect x="240" y="0" width="76" height="76" class="f-tint"/><rect x="316" y="0" width="228" height="76" class="f-cobs"/><rect x="544" y="0" width="152" height="76" class="f-tint"/>
-      <g font-size="13" font-weight="700" class="t-ink"><text x="246" y="18">Short</text><text x="322" y="18">Medium</text><text x="550" y="18">Long</text></g>
-      <g font-size="17" class="t-ink t-serif"><text x="246" y="44">[Y1]</text><text x="398" y="44">[Y2]</text><text x="550" y="44">[Y3]</text></g>
-      <g font-size="12.5" class="t-ink" text-anchor="middle"><text x="259" y="68">Q1</text><text x="297" y="68">Q2</text><text x="335" y="68">Q3</text><text x="373" y="68">Q4</text><text x="411" y="68">Q1</text><text x="449" y="68">Q2</text><text x="487" y="68">Q3</text><text x="525" y="68">Q4</text><text x="563" y="68">Q1</text><text x="601" y="68">Q2</text><text x="639" y="68">Q3</text><text x="677" y="68">Q4</text></g>
-      <g class="s-rule" stroke-width="1"><path d="M240 76V182M392 76V182M544 76V182M0 114H696M0 148H696M0 182H696"/></g>
-      <g font-size="14" class="t-ink"><text x="0" y="102">[Initiative]</text><text x="0" y="136">[Initiative]</text><text x="0" y="170">[Initiative]</text></g>
-      <rect x="242" y="88" width="72" height="20" class="f-paper s-ink" stroke-width="2"/><rect x="318" y="122" width="148" height="20" class="f-cob"/><rect x="470" y="156" width="110" height="20" class="f-paper s-ink" stroke-width="2" stroke-dasharray="5 3"/>
-      <g class="f-ink"><path d="M278 192l8 8-8 8-8-8z"/><path d="M392 192l8 8-8 8-8-8z"/></g>
-      <g font-size="13" font-weight="700" class="t-ink"><text x="0" y="206">Milestones</text><text x="278" y="232" text-anchor="middle">[Milestone]</text><text x="392" y="232" text-anchor="middle">[Gate]</text></g>
-    </svg>
-    <div class="cap"><b>Fig. 4</b>[Caption with the outline and fill key in words.]</div>
-  </div>
-  <table class="tbl" style="font-size:calc(17*var(--u))">
-    <thead><tr><th>Gate</th><th>Pass when</th><th>If not met</th></tr></thead>
-    <tbody><tr><td class="k">[Gate 1]</td><td>[Measurable condition]</td><td>[Action]</td></tr><tr><td class="k">[Gate 2]</td><td>[Measurable condition]</td><td>[Action]</td></tr></tbody>
-  </table>
-  <div class="folio"><span>[Running title]</span><b>10</b></div>
-</article></section>
-
-<!-- ===== ARCHETYPE: INDEX (references + back cover) ===== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>VI · References</span><span>[Masthead · Issue]</span></div>
-  <h1 class="h1">References</h1>
-  <div class="refs"><p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p><p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p></div>
-  <div class="back">
-    <div class="row" style="justify-content:space-between;align-items:flex-start"><div class="mast" style="font-size:calc(80*var(--u));margin:0">MASTHEAD<span>+</span></div><div class="lab" style="color:var(--on-ink-mute);text-align:right">[Issue]<br>[Deliverable]</div></div>
-    <svg viewBox="0 0 704 30" aria-hidden="true"><path d="M0 15H704" class="s-sig" stroke-width="6"/><g class="f-ink s-sig" stroke-width="4"><circle cx="20" cy="15" r="8"/><circle cx="240" cy="15" r="8"/><circle cx="460" cy="15" r="8"/><circle cx="684" cy="15" r="8"/></g></svg>
-    <div class="g" style="color:var(--on-ink);font:500 calc(14*var(--u))/1.4 var(--sans)"><div class="c6"><div class="lab" style="color:var(--signal)">Prepared by</div>[Surnames]</div><div class="c3"><div class="lab" style="color:var(--signal)">Course</div>[Course]</div><div class="c3"><div class="lab" style="color:var(--signal)">Subject</div>[Organization]</div></div>
-  </div>
-</article></section>
-
-<!-- ===== WORKING PAGE: OPEN ITEMS (delete before printing) ===== -->
-<section class="sheet"><article class="page side">
-  <div class="rh"><span>Working page</span><span>Delete before printing</span></div>
-  <div class="sidecol"><h1 class="h1">Open items</h1><p class="dek">Every [bracket] in this issue, in page order.</p></div>
-  <div class="maincol">
-    <table class="tbl"><thead><tr><th class="c">Page</th><th>Item</th><th>Source</th></tr></thead>
-      <tbody><tr><td class="c k">[00]</td><td>[What is missing]</td><td>[Who can confirm]</td></tr></tbody></table>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>12</b></div>
-</article></section>
+<section class="sheet"><article class="page even" lang="en"><div class="rh"><b>Contents</b><span>[Issue]</span></div>
+<div class="g" style="flex:1"><div class="c7 stack" style="gap:0"><div class="hed m">Contents</div><div class="toc"><div class="part">[Part]</div><div class="e"><b>03</b><div><strong>[Story title]</strong><span>[What it covers]</span></div></div><div class="e"><b>05</b><div><strong>[Story title]</strong><span>[What it covers]</span></div></div><div class="part">[Part]</div><div class="e"><b>06</b><div><strong>[Story title]</strong><span>[What it covers]</span></div></div><div class="e"><b>08</b><div><strong>[Story title]</strong><span>[What it covers]</span></div></div></div></div>
+<div class="c5 stack"><div style="position:relative;height:calc(330*var(--u));overflow:hidden"><svg class="art" viewBox="300 200 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cityB" width="800" height="800"/></svg></div><p class="cap"><b>On the cover.</b> [Why the motif fits the subject.]</p><div class="box"><h4>Masthead</h4><p><b>Writers</b><br>[Names]</p><p><b>Submitted to</b><br>[Instructor]</p></div></div></div><div class="folio"><span>[Masthead] · [Running title]</span><b>02</b></div></article></section>
+<section class="sheet"><article class="page odd" lang="en"><div class="rh"><span>[Topic]</span><b>[I · Section]</b></div>
+<div class="g" style="align-items:end"><div class="c8 stack"><div class="kick">[I · Section]</div><h1 class="hed">[Headline that states the finding]</h1></div><p class="c4 dek">[Standfirst: one or two sentences.]</p></div>
+<div class="cols3 txt" style="flex:1"><p class="drop">[Body paragraph. Three justified columns, 10pt, hyphenated. Write real paragraphs of 60–90 words.]</p><p>[Paragraph.]</p><div class="sub">[Crosshead]</div><p>[Paragraph.]</p><p class="pq">“[Pull quote from the text.]”<cite>[Source]</cite></p><p>[Paragraph.]</p><div class="box"><h4>[Explainer]</h4><p>[Define a term the reader needs.]</p></div><p class="end">[Last paragraph ends with the end mark.]</p></div>
+<div class="g ruled"><div class="c3"><div class="stat" style="--sz:30">[0]</div><div class="lab">[Label]</div></div><div class="c3"><div class="stat" style="--sz:30">[0]</div><div class="lab">[Label]</div></div><div class="c3"><div class="stat" style="--sz:30">[0]</div><div class="lab">[Label]</div></div><div class="c3"><div class="stat" style="--sz:30">[0]</div><div class="lab">[Label]</div></div></div><div class="folio"><span>[Masthead] · [Running title]</span><b>03</b></div></article></section>
+<section class="sheet"><article class="page even" lang="en"><div class="rh"><b>By the numbers</b><span>[Part]</span></div>
+<div class="g" style="align-items:end"><div class="c7 stack"><div class="kick">[Subject] at a glance</div><h1 class="hed">By the numbers</h1></div><p class="c5 dek">[Sources.]</p></div>
+<div class="g" style="row-gap:calc(22*var(--u));flex:1"><div class="c4"><div class="num-tile"><div class="big" style="--sz:80">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[One-line context.]</p></div></div><div class="c4"><div class="num-tile"><div class="big" style="--sz:80">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[One-line context.]</p></div></div><div class="c4"><div class="num-tile"><div class="big" style="--sz:80">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[One-line context.]</p></div></div><div class="c3"><div class="num-tile"><div class="big" style="--sz:52">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[Context.]</p></div></div><div class="c3"><div class="num-tile"><div class="big" style="--sz:52">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[Context.]</p></div></div><div class="c3"><div class="num-tile"><div class="big" style="--sz:52">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[Context.]</p></div></div><div class="c3"><div class="num-tile"><div class="big" style="--sz:52">00</div><div class="sub" style="margin:0!important">[Label]</div><p class="mute">[Context.]</p></div></div></div><div class="folio"><span>[Masthead] · [Running title]</span><b>04</b></div></article></section>
+<section class="sheet"><article class="page odd bleed" lang="en"><svg class="art" viewBox="0 0 620 803" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cityB" width="800" height="800"/></svg>
+<div class="overlay" style="bottom:calc(64*var(--u))"><div class="plate stack" style="gap:calc(12*var(--u))"><div class="kick" style="color:var(--signal)">[II · Part]</div><h1 class="hed xl" style="color:var(--on-ink)">[Opener headline]</h1><p class="dek">[Standfirst.]</p><p class="by" style="color:var(--on-ink)">By [Authors]</p></div></div>
+<div class="folio inv"><span>[Masthead]</span><b>05</b></div></article></section>
+<section class="sheet"><article class="page even" lang="en"><div class="rh"><b>[II.2 · Section]</b><span>[Topic]</span></div>
+<div class="g" style="align-items:end"><div class="c7 stack"><div class="kick">[II.2 · Section]</div><h1 class="hed">[Headline]</h1></div><p class="c5 dek">[Standfirst.]</p></div>
+<div class="g" style="flex:1"><div class="c7 stack"><table class="tbl"><thead><tr><th>[Column]</th><th class="c">[Column]</th><th class="c">[Column]</th></tr></thead><tbody><tr><td class="k">[Row]</td><td class="c"><span class="dot full"></span></td><td class="c"><span class="dot view"></span></td></tr><tr><td class="k">[Row]</td><td class="c"><span class="dot part"></span></td><td class="c">—</td></tr></tbody></table><p class="cap"><b>Fig. 1</b> [Caption. Source.]</p><div class="txt" style="margin-top:auto"><div class="sub" style="margin-top:0!important">[Crosshead]</div><p>[Paragraph.]</p></div></div>
+<div class="c5 box qa"><h4>From the interview</h4><p class="cap">Paraphrased from the group’s notes.</p><p class="q">[Question?]</p><p class="a">[Answer.]</p><p class="q">[Question?]</p><p class="a">[Answer.]</p></div></div><div class="folio"><span>[Masthead] · [Running title]</span><b>06</b></div></article></section>
+<section class="sheet"><article class="page odd" lang="en"><div class="rh"><span>[Topic]</span><b>[III.3 · Section]</b></div>
+<div class="g" style="align-items:end"><div class="c7 stack"><div class="kick">[III.3 · Section]</div><h1 class="hed">[Headline with the key number]</h1></div><div class="c5 box"><h4>[Basis]</h4><p><span class="big" style="--sz:26">[A ÷ B = C]</span></p><p>[Source.]</p></div></div>
+<div class="fig"><svg viewBox="0 0 712 170" role="img" aria-label="Range bars"><g class="s-rule" stroke-width="1.5"><path d="M240 6V140M328 6V140M416 6V140M504 6V140M592 6V140M680 6V140"/></g><g font-size="13.5" font-weight="800" class="t-ink"><text x="0" y="28">[Item A]</text><text x="0" y="74">[Item B]</text><text x="0" y="120">[Item C]</text></g><rect x="486" y="12" width="124" height="24" class="f-cob"/><rect x="425" y="58" width="62" height="24" class="f-cob"/><rect x="363" y="104" width="62" height="24" class="f-paper s-ink" stroke-width="2"/><g font-size="12" class="t-ink" text-anchor="middle"><text x="240" y="162">0</text><text x="416" y="162">2k</text><text x="592" y="162">4k</text></g></svg><p class="cap"><b>Fig. 2</b> [Caption with the fill and outline key in words.]</p></div>
+<div class="g" style="flex:1"><div class="c7"><table class="tbl num"><thead><tr><th>[Assumption]</th><th class="c">[Case]</th><th class="c">[Case]</th></tr></thead><tbody><tr><td class="k">[Base]</td><td class="c k" style="background:var(--cobalt-soft)">[0]</td><td class="c">[0]</td></tr></tbody></table></div><div class="c5 txt"><div class="sub" style="margin-top:0!important">[Reading the table]</div><p>[Paragraph.]</p></div></div><div class="folio"><span>[Masthead] · [Running title]</span><b>07</b></div></article></section>
+</div>

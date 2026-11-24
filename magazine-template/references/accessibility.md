@@ -1,47 +1,34 @@
 # Readability and colour for every reader
 
-Design for three readers at once: one with weaker eyesight (for example an older professor), one who is colour-blind, and one holding a black-and-white printout.
+A real magazine prints its body text at 9–10pt. This skill uses 10pt (13.5u) body text and keeps everything else readable for older readers, colour-blind readers, and black-and-white printouts.
 
-## Size floor (1u = 0.75pt on Letter)
+## Print-size floor (1u = 0.75pt)
 
 | Text | Size |
 |---|---|
-| Body | 17u (12.75pt) |
-| Deck | 21u |
-| Tables | 15u; 16.5–17u on table-led pages |
-| Captions, labels, chart text, folios | 13u minimum (9.75pt) |
-| Headlines | 48u (72u on openers) |
+| Body | 13.5u (10.1pt) on 1.42 leading |
+| Standfirst | 18u |
+| Tables, sidebars | 12–12.5u |
+| Captions, chart labels | 11.5u minimum |
+| Kickers, running heads, folios | 11u minimum (caps, tracked) |
 
-- **SVG text sizes are only true when the viewBox width equals the rendered width in u.** Full width is 704, c8 is 443, c7 is 402, c6 is 342, and c5 is 282.
-- **Shrinking type to fit is never allowed.** Cut words or add a page instead.
-- **Bodoni Moda and other high-contrast didones are for the masthead only.** Their hairlines break up at smaller sizes.
-- **Avoid hard-to-read styling:** no light weights, no all-caps body text, and no long italic passages.
+- **SVG text sizes.** They are true only when the viewBox width equals the rendered width in u: full width 712, c7 about 410, c5 about 290.
+- **Never shrink type to fit.** Cut words or add a page.
+- **Justified text needs hyphenation and wide enough columns.** Use three columns across the page. Keep narrow boxes left-aligned so the text does not form rivers.
+- **Bodoni and other high-contrast didones are for the masthead only.**
+- **On screen**, the pages scale. A reader who needs larger text can zoom, or print.
 
 ## Contrast
 
-- **Body text:** 7:1 or higher. Ink `#15171C` and muted `#4D5562` both pass on white.
-- **Yellow:** use it only as a fill or line. Never set yellow text on white.
+- Body text has a contrast of 7:1 or higher. Ink `#15171C` and muted `#4D5562` both pass on white.
+- Text on art always sits on a solid ink plate, never directly on the illustration.
+- Yellow is a fill or line colour only. Never use it for text on white.
 
-## Colour that does not rely on colour vision
+## Colour
 
-- **One accent per body page:** blue `#1B42C4` for data. The brand colour appears only where the motif does.
-- **Every colour difference has a second cue:**
-  - a word (label values and cells directly, for example "below cost")
-  - fill versus outline
-  - solid versus dashed
-  - marker shape
-  - a check or cross icon
-- **No red against green.** Orange `#B4470C` is the alert colour, and it appears only on risk or over-cost items.
-- **Heat maps use two tones:** tint for low and blue-soft for the high zone. Filled versus outlined markers show priority.
-
-## Palette and jobs
-
-| Token | Hex | Job |
-|---|---|---|
-| `--ink` | `#15171C` | Text, dark panels, primary marks |
-| `--muted` | `#4D5562` | Secondary text |
-| `--rule` | `#D5D9E0` | Rules only |
-| `--tint` | `#F3F4F6` | Note boxes and chart fields; the only fill |
-| `--cobalt` / `--cobalt-soft` | `#1B42C4` / `#DCE3F8` | Data, fundamental category, high zone |
-| `--signal` | `#FFC20E` | Brand motif: cover, contents, openers, back cover |
-| `--alert` | `#B4470C` | Risk and over-cost only |
+- **One data accent:** blue `#1B42C4`.
+- **Brand yellow** `#FFC20E` appears only in the motif.
+- **Alert orange** `#B4470C` marks risk or over-cost items only.
+- **Every colour difference has a second cue:** a word, fill versus outline, solid versus dashed, a marker shape, or an icon.
+- **No red against green.**
+- **Heat maps use two tones,** and filled versus outlined markers show priority.

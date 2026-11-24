@@ -3,7 +3,7 @@
 Charts are inline SVG. Each one follows three rules:
 
 1. **Set the `viewBox` width to the rendered width in `u`.** Full width = 704, c8 = 443, c7 = 402, c6 = 342, c5 = 282, c4 = 241. One viewBox unit then equals 1u, so `font-size="12"` really is 12u (9pt).
-2. **Chart text is at least 13u.** Axis titles and series labels are 13–15u at weight 700.
+2. **Chart text is at least 11.5u.** Axis titles and series labels are 13–15u at weight 700.
 3. **One linear scale per axis.** `pos = start + (value − min) × length / (max − min)`. Every tick label names a value the scale reaches.
 
 For accessibility, label series directly on the chart instead of only in a legend. Give each series a second cue besides colour: a fill versus an outline, a dash pattern, a marker shape, or a word.
@@ -68,3 +68,13 @@ For accessibility, label series directly on the chart instead of only in a legen
 
 - Do not chart sample or invented values. Leave the chart out until the data exists.
 - Do not put decorative fills behind lines, or legends where a direct label would fit.
+
+## Magazine infographics
+
+- **Icon array:** repeat `<use href="#person">` at 24u steps, one colour per group, and caption the groups in words.
+- **Waffle:** one 12u square per unit (for example, per hour), in rows of 17, with counts stated in the caption.
+- **Route timeline:** a thick motif-colour line with stop circles; year at 17u bold and a 12u note under each stop. Space the stops so the last label fits inside the page.
+- **Funnel:** stacked bars that narrow, labelled inside.
+- **Cycle:** four circles on a ring, with the current or key step filled in the accent.
+- **Isometric layers:** stacked rhombi labelled inside, with descriptions to the right.
+- **Core diagram:** customers on the left, units on top, shared data in the centre (blue tint), core stages as dark chevrons, technology at the bottom.
