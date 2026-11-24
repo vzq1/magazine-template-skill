@@ -1,52 +1,49 @@
-# Page archetypes and variation
+# Page archetypes, variation, and clutter control
 
-A magazine feels designed when its pages differ. It feels generated when every page repeats "running head, kicker, headline, deck, content". The starter has seven archetypes. Plan every page as one of them, and break the pattern on purpose.
+## Archetypes
 
-| Archetype | How it looks | Best for | Starter class |
+| Archetype | How it looks | Best for | Classes |
 |---|---|---|---|
-| **Opener band** | Full-bleed colour band across the top third: part label, huge headline, deck, ghost numeral. No running head. | The first page of each part | `.page.flush` + `.band` (`.cob`, `.sig` variants) |
-| **Panel split** | A tall coloured panel down the left third with the headline and big stats; content on the right. | Contents, single-topic pages, checklists | `.page.split` + `.panel` (`.sig`) + `.mainc` |
-| **Feature** | Large headline, stats strip, two-column body with drop cap, pull quote, short closing list. | Executive summary, narrative sections | default `.page` + `.cols2` + `.lead` + `.pull` |
-| **Hero figure** | One diagram or chart fills most of the page; brief text beside or below it. | Frameworks, SWOT, org charts, flows, heat maps, Gantt charts | default `.page` + one big `.fig` |
-| **Rail** | A narrow left rail with a vertical word in display type; a wide content column. | Table-led pages, legends, scope lists | `.page.railed` + `.rail > span` + `.railmain` |
-| **Data spread** | Several charts and tables on a grid, with a formula or stat box. | Cost-benefit analysis, KPIs, numbers-heavy sections | default `.page` + `.g` columns |
-| **Index** | References above, dark back-cover band below. | Last page | `.refs` + `.back` |
+| **Cover** | Dark top band with masthead, motif, and headline. Cover lines and credits below. | Page 1 | `.page.cover` |
+| **Panel split** | Dark left panel (300u) holds the headline and a few stats. Content sits on the right. | Contents, single-topic pages | `.page.split` + `.panel` + `.mainc` |
+| **Feature** | Headline, a ruled stats row, two-column body with a drop cap, and a closing note. | Summary, conclusion | default `.page` + `.cols2` + `.lead` |
+| **Opener band** | Full-bleed dark band holding the part label, a 72u headline, a deck, and the motif line (the current part's stop filled). | First page of each part | `.page.flush` + `.band` |
+| **Hero figure** | One diagram or chart fills most of the page. | Frameworks, core diagrams, data flows, org charts, heat maps, Gantt charts | default `.page` + `.fig` |
+| **Side column** | Narrow left column (220u) holds the headline, deck, context, and key. A wide column holds the table. | Matrices, revision notes, scope, open items | `.page.side` + `.sidecol` + `.maincol` |
+| **Quad** | Four ruled quadrants on white. | SWOT and other 2×2 lists | `.quad` |
+| **Data spread** | Chart, table, and a ruled stats row. | Cost-benefit analysis, KPIs | `.g` columns |
+| **Index** | References above, dark back band below. | Last printed page | `.refs` + `.back` |
 
 ## Variation rules
 
-1. **No two pages in a row share an archetype.** Two hero-figure pages in a row are allowed only when the figures differ in shape, for example a matrix then a flow diagram.
-2. **Move the headline.** It can sit at the top (most pages), the bottom (the org chart page), inside a coloured panel (split pages), or inside a band (openers).
-3. **Rotate the colour fields.** Use dark, blue, and yellow bands and panels across the issue, so no single colour dominates.
-4. **Drop or change the running head on some pages.** Opener and panel-split pages have none.
-5. **Close each page differently.** End on a pull quote, a stat row, a note row, a dark bottom band (`.band` with negative bottom margin), or a full table.
-6. **Use the page for one idea.** If a page needs two big figures, split it into two pages.
+1. **No two pages in a row share an archetype.** Two hero pages in a row are acceptable only if the figures differ in shape.
+2. **Move the headline sometimes.** It can sit at the bottom of the org chart page, in a side column, in a panel, or in a band.
+3. **Close pages differently.** Use a ruled stats row, a two-column definitions row, a note, a dark bottom band, or a table.
+4. **Give each page one focal element.** If a page needs two major figures, split it into two pages.
 
-## Fill rules: no dead space
+## Clutter: what reviewers flagged, and the rule that prevents it
 
-Pages are fixed-height and hide overflow. Check every page in a render (`scripts/render-pages.sh`).
+| Clutter | Rule |
+|---|---|
+| Three faces and italic display on one page | Use the type system in SKILL.md. No italic or colour inside headlines. |
+| About 50 font sizes | Allow seven sizes. Inline size overrides may only pick from that scale. |
+| Three labels per page (running head, kicker, chip) all naming the section | Use one label: the running head, carrying the rubric number. No kicker or chip on the same page. |
+| About 14 chip, label, and box styles | Use one tag style (outline; blue for fundamental, dashed for strategic), one note style (tint box), and rules for everything else. |
+| Yellow given seven meanings | Each colour has one job. The brand colour appears only on the cover, contents, openers, and back cover. |
+| Ghost numerals, giant letters, empty coloured slabs, clip-art icons | Delete them. Icons survive only where they carry meaning, such as a check or cross in a checklist. |
+| Striped placeholders and sample charts | Use plain [brackets] plus the Open-items page. Do not chart invented data. |
+| The same pull quote or tint-box footer on many pages | Use at most two pull quotes in the whole issue. Vary how pages close. |
 
-- **Under-filled (more than about 15% blank at the bottom):** add real content. Do not add decoration. Good fillers:
-  - a pull quote of the page's key point
+## Fill rules
+
+- **Under-filled pages** (more than about 15% blank) get real content, never decoration. Good fillers:
   - definitions of terms used on the page
-  - an assumptions row
-  - a "top three actions" row
-  - a "how this connects" strip
-  - a rating-scale table
-- **Overflowing:** cut words first, then move a block to the next page, then shrink a figure. Never shrink type below the floor in `accessibility.md`.
-- **Pin closing blocks to the bottom** with `margin-top:auto` (or `flex:1` on a band), so the page ends cleanly.
-
-## Planning a full issue
-
-A 16–20 page course paper usually becomes 24–30 pages at readable sizes. A typical flow:
-
-```
-Cover → Contents (split) → Summary (feature) → Editor's note/how to read (rail)
-→ Part I opener (band) → profile (hero: vertical timeline) → model (hero: matrix)
-→ units + process (icon rows + bottom band) → org chart (hero, headline at bottom)
-→ data flow (hero) → access matrix (rail) → stakeholders (hero: rings + table)
-→ competitors (data spread) → bid/accreditation (split, yellow) → SWOT (hero)
-→ Part II opener (band, blue) → problems (feature list) → scope (rail)
-→ costs (data spread) → benefits (data spread, stats first) → KPI tiles → KPI table + bottom band
-→ heat map (hero) → risk register (table + top actions)
-→ Part III opener (band, yellow) → future initiatives (card grid) → roadmap (hero: Gantt) → references (index)
-```
+  - what changes and what stays the same
+  - a worked example from the source material
+  - limitations
+  - a review cycle
+  - which initiative or page something connects to
+  - stats from the content
+- **Larger type** is the first fix for a thin page. It helps older readers too.
+- **Overflowing pages:** cut words, then move a block to the next page, then shrink a figure. Never go below the size floor.
+- **Pin closing rows to the bottom** with `margin-top:auto`, so empty space never sits at the foot of a page.

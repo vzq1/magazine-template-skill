@@ -2,247 +2,185 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Libre+Franklin:ital,wght@0,400..900;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,800&family=Libre+Franklin:wght@500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
 <style>
-/* Layout: Letter magazine pages (816x1056 u) on a 12-column grid. Seven page archetypes rotate: opener band, panel split, feature, hero figure, rail, data spread, index. Replace the motif and token values with ones from your subject; keep token names and the readability floor. */
-/* Readability floor: body 15u (11.25pt), smallest text 12u (9pt). Text contrast 7:1 or higher. Colour is never the only cue. */
+/* Layout: Letter magazine pages (816x1056 u), 12-column grid, fixed 56u side margins on every page.
+   Calm serif magazine: Source Serif 4 for headlines and body, Libre Franklin for labels, tables, numbers.
+   Bodoni Moda only on the ROUTE+ masthead. One accent colour per body page; signal yellow only on cover,
+   contents, part openers, back cover. Seven sizes: 72 / 48 / 44 / 24 / 16.5 / 14 / 13. */
 :root{
   --desk:#22252B;
   --paper:#FFFFFF;
   --ink:#15171C;
-  --muted:#444B57;
-  --line:#C5CBD4;
-  --tint:#EEF1F5;
+  --muted:#4D5562;
+  --rule:#D5D9E0;
+  --tint:#F3F4F6;
   --cobalt:#1B42C4;
-  --cobalt-soft:#D5DDF7;
+  --cobalt-soft:#DCE3F8;
   --signal:#FFC20E;
-  --signal-soft:#FFF0BF;
-  --orange:#B4470C;
-  --orange-soft:#FBE1CF;
-  --teal:#0D6B61;
-  --teal-soft:#D3ECE8;
-  --h1:#FFF7DB;--h2:#FFDD7A;--h3:#F7A85A;--h4:#E8803A;
+  --alert:#B4470C;
   --on-ink:#FFFFFF;
   --on-ink-mute:#C3C8D2;
-  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
-  --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
+  --mast:"Bodoni Moda","Didot",Georgia,serif;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--desk);color:var(--ink);font-family:var(--serif);padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .sheet{width:min(100%,816px);margin:0 auto 32px;container-type:inline-size;box-shadow:0 12px 40px rgba(0,0,0,.35)}
-.page{--u:calc(100cqi / 816);position:relative;aspect-ratio:816/1056;background:var(--paper);color:var(--ink);overflow:hidden;font-size:calc(15*var(--u));line-height:1.5;padding:calc(66*var(--u)) calc(56*var(--u)) calc(84*var(--u));display:flex;flex-direction:column;gap:calc(22*var(--u))}
+.page{--u:calc(100cqi / 816);position:relative;aspect-ratio:816/1056;background:var(--paper);color:var(--ink);overflow:hidden;font:400 calc(17*var(--u))/1.5 var(--serif);font-optical-sizing:auto;padding:calc(76*var(--u)) calc(56*var(--u)) calc(88*var(--u));display:flex;flex-direction:column;gap:calc(26*var(--u))}
 .page p{margin:0}
 svg{display:block;max-width:100%}
-.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-.rh{position:absolute;top:calc(26*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:center;font:600 calc(12*var(--u))/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.board{display:inline-flex;align-items:center;gap:calc(6*var(--u));background:var(--signal);color:var(--ink);font:700 calc(12*var(--u))/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:calc(6*var(--u)) calc(10*var(--u));border-radius:calc(2*var(--u))}
-.folio{position:absolute;bottom:calc(28*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:500 calc(12*var(--u))/1 var(--sans);letter-spacing:.06em;color:var(--muted);border-top:1px solid var(--line);padding-top:calc(10*var(--u))}
-.folio b{font:800 calc(24*var(--u))/1 var(--display);color:var(--ink);letter-spacing:0}
-.folio.inv{color:var(--on-ink-mute);border-color:#3A3F49}.folio.inv b{color:var(--on-ink)}
+/* running head: one label per page, numbered to the paper's sections */
+.rh{position:absolute;top:calc(30*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:700 calc(13*var(--u))/1 var(--sans);color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:calc(10*var(--u))}
+.rh span+span{font-weight:500;color:var(--muted)}
+.folio{position:absolute;bottom:calc(32*var(--u));left:calc(56*var(--u));right:calc(56*var(--u));display:flex;justify-content:space-between;align-items:baseline;font:500 calc(13*var(--u))/1 var(--sans);color:var(--muted)}
+.folio b{font:700 calc(16.5*var(--u))/1 var(--sans);color:var(--ink)}
+.folio.inv{color:var(--on-ink-mute)}.folio.inv b{color:var(--on-ink)}
 
-.kicker{font:700 calc(12.5*var(--u))/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:calc(8*var(--u))}
-.kicker::before{content:"";width:calc(10*var(--u));height:calc(10*var(--u));background:var(--signal);flex:none}
-.h1{font-family:var(--display);font-weight:700;font-size:calc(58*var(--u));line-height:1.02;letter-spacing:-.015em;margin:0;text-wrap:balance}
-.h1 em{font-style:italic;font-weight:600;color:var(--cobalt)}
-.h1.xl{font-size:calc(92*var(--u));line-height:.95}
-.h2{font-family:var(--display);font-weight:700;font-size:calc(28*var(--u));line-height:1.1;margin:0;text-wrap:balance}
-.h3{font:700 calc(16.5*var(--u))/1.25 var(--sans);margin:0}
-.dek{font-family:var(--serif);font-style:italic;font-size:calc(19*var(--u));line-height:1.4;color:var(--muted)}
-.lab{font:700 calc(12*var(--u))/1.35 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.small{font-size:calc(13.5*var(--u));line-height:1.45}
+/* type: seven sizes */
+.h1{font:600 calc(48*var(--u))/1.08 var(--serif);letter-spacing:-.012em;margin:0;text-wrap:balance}
+.h1.xl{font-size:calc(72*var(--u));line-height:1.02}
+.h2{font:600 calc(24*var(--u))/1.2 var(--serif);margin:0;text-wrap:balance}
+.h3{font:700 calc(16.5*var(--u))/1.3 var(--sans);margin:0}
+.dek{font-size:calc(21*var(--u));line-height:1.45;color:var(--muted)}
+.lab{font:700 calc(13*var(--u))/1.35 var(--sans);color:var(--muted)}
+.caps{font:700 calc(13*var(--u))/1.2 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.small{font-size:calc(15*var(--u));line-height:1.45}
 .sans{font-family:var(--sans)}
 .mute{color:var(--muted)}
 .num{font-variant-numeric:tabular-nums lining-nums}
+.stat{white-space:nowrap;font:700 calc(var(--sz,44)*var(--u))/1 var(--sans);font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.01em}
 .body p+p{margin-top:.7em}
-.cols2{column-count:2;column-gap:calc(24*var(--u))}
-.lead::first-letter{font:800 calc(64*var(--u))/.8 var(--display);float:left;margin:calc(6*var(--u)) calc(8*var(--u)) 0 0;color:var(--cobalt)}
-.big-stat{font:800 calc(150*var(--u))/.8 var(--display);color:var(--cobalt);letter-spacing:-.03em}
-.stat{font:800 calc(46*var(--u))/1 var(--display);letter-spacing:-.01em}
-.pull{font:italic 600 calc(26*var(--u))/1.25 var(--display);border-top:calc(4*var(--u)) solid var(--signal);padding-top:calc(12*var(--u));text-wrap:balance}
+.cols2{column-count:2;column-gap:calc(28*var(--u))}
+.pull{font:600 calc(24*var(--u))/1.35 var(--serif);border-top:2px solid var(--ink);padding-top:calc(14*var(--u));text-wrap:balance}
+.lead::first-letter{font:600 calc(58*var(--u))/.8 var(--serif);float:left;margin:calc(7*var(--u)) calc(8*var(--u)) 0 0}
 
-.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(20*var(--u));row-gap:calc(18*var(--u))}
+/* grid */
+.g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:calc(20*var(--u));row-gap:calc(20*var(--u))}
 .g>*{min-width:0}
 .c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}
 .stack{display:flex;flex-direction:column;gap:calc(12*var(--u))}
 .row{display:flex;gap:calc(12*var(--u));align-items:center}
-.grow{flex:1}
+.ruled{border-top:2px solid var(--ink);padding-top:calc(12*var(--u))}
 
+/* figures */
 .fig{display:flex;flex-direction:column;gap:calc(10*var(--u))}
-.cap{font:500 calc(12*var(--u))/1.45 var(--sans);color:var(--muted);border-top:2px solid var(--ink);padding-top:calc(8*var(--u))}
-.cap b{color:var(--ink);font-weight:800;margin-right:.5em}
+.cap{font:500 calc(13*var(--u))/1.45 var(--sans);color:var(--muted);border-top:1px solid var(--rule);padding-top:calc(8*var(--u))}
+.cap b{color:var(--ink);font-weight:700;margin-right:.4em}
 .fig svg text{font-family:var(--sans)}
-.t-ink{fill:var(--ink)}.t-mute{fill:var(--muted)}.t-white{fill:var(--on-ink)}.t-cob{fill:var(--cobalt)}.t-or{fill:var(--orange)}
-.t-disp{font-family:var(--display)!important;font-weight:800}
-.f-paper{fill:var(--paper)}.f-tint{fill:var(--tint)}.f-ink{fill:var(--ink)}.f-cob{fill:var(--cobalt)}.f-cobs{fill:var(--cobalt-soft)}.f-sig{fill:var(--signal)}.f-sigs{fill:var(--signal-soft)}.f-or{fill:var(--orange)}.f-ors{fill:var(--orange-soft)}.f-teal{fill:var(--teal)}.f-none{fill:none}
-.f-h1{fill:var(--h1)}.f-h2{fill:var(--h2)}.f-h3{fill:var(--h3)}.f-h4{fill:var(--h4)}
-.s-ink{stroke:var(--ink)}.s-line{stroke:var(--line)}.s-cob{stroke:var(--cobalt)}.s-sig{stroke:var(--signal)}.s-or{stroke:var(--orange)}.s-paper{stroke:var(--paper)}
+.t-ink{fill:var(--ink)}.t-mute{fill:var(--muted)}.t-white{fill:var(--on-ink)}.t-cob{fill:var(--cobalt)}.t-alert{fill:var(--alert)}
+.t-serif{font-family:var(--serif)!important;font-weight:600}
+.f-paper{fill:var(--paper)}.f-tint{fill:var(--tint)}.f-ink{fill:var(--ink)}.f-cob{fill:var(--cobalt)}.f-cobs{fill:var(--cobalt-soft)}.f-sig{fill:var(--signal)}.f-none{fill:none}
+.s-ink{stroke:var(--ink)}.s-rule{stroke:var(--rule)}.s-cob{stroke:var(--cobalt)}.s-sig{stroke:var(--signal)}.s-alert{stroke:var(--alert)}.s-paper{stroke:var(--paper)}.s-mute{stroke:var(--muted)}
 
-.tbl{width:100%;border-collapse:collapse;font:400 calc(13.5*var(--u))/1.4 var(--sans)}
-.tbl th{font:700 calc(12*var(--u))/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:calc(8*var(--u));border-bottom:2px solid var(--ink);vertical-align:bottom}
-.tbl td{padding:calc(8*var(--u));border-bottom:1px solid var(--line);vertical-align:top}
-.tbl td.c,.tbl th.c{text-align:center}
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font:400 calc(15*var(--u))/1.4 var(--sans)}
+.tbl th{font:700 calc(13*var(--u))/1.3 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:left;padding:calc(8*var(--u)) calc(8*var(--u)) calc(8*var(--u)) 0;border-bottom:2px solid var(--ink);vertical-align:bottom}
+.tbl td{padding:calc(11*var(--u)) calc(10*var(--u)) calc(11*var(--u)) 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl td.c,.tbl th.c{text-align:center;padding-left:calc(6*var(--u));padding-right:calc(6*var(--u))}
 .tbl .k{font-weight:700}
-.tbl.big{font-size:calc(14.5*var(--u))}
 
-.tbd{background:repeating-linear-gradient(-45deg,transparent 0 calc(4*var(--u)),var(--signal-soft) calc(4*var(--u)) calc(8*var(--u)));outline:1.5px dashed #8A6500;outline-offset:1px;padding:0 .25em;font-style:normal}
-.sample{display:inline-block;font:800 calc(12*var(--u))/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--signal);padding:calc(4*var(--u)) calc(6*var(--u));border-radius:calc(2*var(--u));vertical-align:middle}
+/* placeholders: plain brackets */
+.tbd{color:var(--muted)}
 
-.tag{display:inline-flex;align-items:center;gap:calc(5*var(--u));font:700 calc(12*var(--u))/1 var(--sans);letter-spacing:.04em;padding:calc(5*var(--u)) calc(8*var(--u));border-radius:calc(2*var(--u));border:1.5px solid currentColor;white-space:nowrap}
-.tag.fund{color:var(--cobalt);background:var(--cobalt-soft);border-color:var(--cobalt)}
-.tag.arch{color:var(--ink);background:var(--signal);border-color:var(--ink)}
-.tag.strat{color:var(--ink);background:var(--paper);border-color:var(--ink);border-width:2.5px}
-.tag.new{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+/* one tag style */
+.tag{display:inline-block;font:700 calc(13*var(--u))/1 var(--sans);padding:calc(5*var(--u)) calc(8*var(--u));border:1.5px solid var(--ink);white-space:nowrap}
+.tag.fund{border-color:var(--cobalt);color:var(--cobalt)}
+.tag.strat{border-style:dashed}
 
-.note{display:flex;gap:calc(12*var(--u));padding:calc(14*var(--u)) calc(16*var(--u));background:var(--tint);font-size:calc(14.5*var(--u));line-height:1.45}
-.note .ic{font-size:calc(24*var(--u));color:var(--cobalt);margin-top:calc(1*var(--u))}
-.note.warn .ic{color:var(--orange)}
-.note b{font-family:var(--sans)}
-
-/* ---------- archetype: opener band ---------- */
+/* opener band */
 .page.flush{padding-top:0}
-.band{margin:0 calc(-56*var(--u));padding:calc(60*var(--u)) calc(56*var(--u)) calc(40*var(--u));background:var(--ink);color:var(--on-ink);display:flex;flex-direction:column;gap:calc(14*var(--u));position:relative}
-.band.cob{background:var(--cobalt)}
-.band.sig{background:var(--signal);color:var(--ink)}
-.band .partno{font:800 calc(13*var(--u))/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
-.band.sig .partno{color:var(--ink)}
-.band .dek{color:var(--on-ink-mute);max-width:calc(560*var(--u))}
-.band.sig .dek{color:var(--ink)}
-.band .ghost{position:absolute;right:calc(40*var(--u));top:calc(20*var(--u));font:800 calc(230*var(--u))/1 var(--display);opacity:.14}
+.band{margin:0 calc(-56*var(--u));padding:calc(64*var(--u)) calc(56*var(--u)) calc(34*var(--u));background:var(--ink);color:var(--on-ink);display:flex;flex-direction:column;gap:calc(16*var(--u))}
+.band .partno{font:700 calc(13*var(--u))/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+.band .dek{color:var(--on-ink-mute);max-width:calc(580*var(--u))}
+.band .route{margin-top:calc(6*var(--u))}
 
-/* ---------- archetype: panel split ---------- */
+/* panel split */
 .page.split{padding:0;display:grid;grid-template-columns:calc(300*var(--u)) minmax(0,1fr);gap:0}
-.panel{background:var(--ink);color:var(--on-ink);padding:calc(66*var(--u)) calc(34*var(--u)) calc(84*var(--u)) calc(56*var(--u));display:flex;flex-direction:column;gap:calc(18*var(--u))}
-.panel.sig{background:var(--signal);color:var(--ink)}
-.panel .kicker{color:var(--signal)}
-.panel.sig .kicker{color:var(--ink)}
-.panel.sig .kicker::before{background:var(--ink)}
-.mainc{padding:calc(66*var(--u)) calc(56*var(--u)) calc(84*var(--u)) calc(36*var(--u));display:flex;flex-direction:column;gap:calc(20*var(--u));min-width:0}
+.panel{background:var(--ink);color:var(--on-ink);padding:calc(76*var(--u)) calc(34*var(--u)) calc(88*var(--u)) calc(56*var(--u));display:flex;flex-direction:column;gap:calc(18*var(--u))}
+.mainc{padding:calc(76*var(--u)) calc(56*var(--u)) calc(88*var(--u)) calc(36*var(--u));display:flex;flex-direction:column;gap:calc(22*var(--u));min-width:0}
 
-/* ---------- archetype: rail ---------- */
-.page.railed{padding-left:calc(180*var(--u))}
-.rail{position:absolute;left:calc(56*var(--u));top:calc(66*var(--u));bottom:calc(84*var(--u));width:calc(96*var(--u));border-right:calc(6*var(--u)) solid var(--signal);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
-.rail span{writing-mode:vertical-rl;transform:rotate(180deg);font:800 calc(80*var(--u))/1 var(--display);color:var(--cobalt);white-space:nowrap;letter-spacing:-.01em}
-.railmain{display:flex;flex-direction:column;gap:calc(20*var(--u));min-width:0;flex:1}
+/* side column with real content */
+.page.side{display:grid;grid-template-columns:calc(220*var(--u)) minmax(0,1fr);column-gap:calc(32*var(--u))}
+.sidecol{display:flex;flex-direction:column;gap:calc(16*var(--u));border-right:1px solid var(--rule);padding-right:calc(24*var(--u))}
+.maincol{display:flex;flex-direction:column;gap:calc(22*var(--u));min-width:0}
 
-/* ---------- cover ---------- */
+/* cover */
 .cover{padding:0;display:block}
-.cv-top{position:absolute;inset:0 0 auto 0;height:calc(660*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) 0;display:flex;flex-direction:column}
-.cv-issue{display:flex;justify-content:space-between;font:600 calc(12*var(--u))/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-mute);border-bottom:1px solid #3A3F49;padding-bottom:calc(12*var(--u))}
-.mast{font-family:var(--display);font-weight:900;font-size:calc(156*var(--u));line-height:.82;letter-spacing:-.02em;margin-top:calc(26*var(--u))}
-.mast span{color:var(--signal);font-family:var(--sans);font-weight:900}
-.cv-tag{font:600 calc(15*var(--u))/1.3 var(--sans);color:var(--on-ink-mute);margin-top:calc(12*var(--u));letter-spacing:.02em}
+.cv-top{position:absolute;inset:0 0 auto 0;height:calc(640*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) 0;display:flex;flex-direction:column}
+.cv-issue{display:flex;justify-content:space-between;font:500 calc(13*var(--u))/1 var(--sans);color:var(--on-ink-mute);border-bottom:1px solid #3A3F49;padding-bottom:calc(12*var(--u))}
+.mast{font:800 calc(156*var(--u))/.82 var(--mast);letter-spacing:-.02em;margin-top:calc(28*var(--u))}
+.mast span{color:var(--signal);font-family:var(--sans);font-weight:700}
+.cv-tag{font:500 calc(16.5*var(--u))/1.3 var(--sans);color:var(--on-ink-mute);margin-top:calc(14*var(--u))}
 .cv-route{margin:calc(12*var(--u)) calc(-56*var(--u)) 0;width:calc(100% + 112*var(--u));max-width:none}
 .cv-route text{font-family:var(--sans);font-weight:700}
-.cv-head{font-family:var(--display);font-weight:700;font-style:italic;font-size:calc(58*var(--u));line-height:1;margin:calc(14*var(--u)) 0 0;max-width:calc(600*var(--u));text-wrap:balance}
-.cv-dek{font-size:calc(16*var(--u));color:var(--on-ink-mute);margin-top:calc(12*var(--u))!important;max-width:calc(560*var(--u))}
-.cv-bottom{position:absolute;inset:calc(660*var(--u)) 0 0 0;padding:calc(26*var(--u)) calc(56*var(--u)) calc(26*var(--u));display:flex;flex-direction:column;justify-content:space-between}
-.cv-lines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(18*var(--u))}
-.cv-line{display:flex;flex-direction:column;gap:calc(8*var(--u));border-top:2px solid var(--ink);padding-top:calc(10*var(--u))}
-.cv-line .h3{font-family:var(--display);font-size:calc(19*var(--u));line-height:1.1}
-.cv-line p{font-size:calc(13*var(--u));color:var(--muted);line-height:1.4}
-.cv-credit{display:grid;grid-template-columns:2fr 1fr 1fr;gap:calc(20*var(--u));border-top:1px solid var(--line);padding-top:calc(12*var(--u));font:500 calc(12.5*var(--u))/1.45 var(--sans)}
+.cv-head{font:600 calc(56*var(--u))/1.05 var(--serif);margin:calc(10*var(--u)) 0 0;max-width:calc(620*var(--u));text-wrap:balance}
+.cv-bottom{position:absolute;inset:calc(640*var(--u)) 0 0 0;padding:calc(30*var(--u)) calc(56*var(--u)) calc(30*var(--u));display:flex;flex-direction:column;justify-content:space-between}
+.cv-lines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(20*var(--u))}
+.cv-line{display:flex;flex-direction:column;gap:calc(6*var(--u));border-top:2px solid var(--ink);padding-top:calc(10*var(--u))}
+.cv-line b{font:700 calc(13*var(--u))/1 var(--sans);color:var(--muted)}
+.cv-line .h2{font-size:calc(20*var(--u))}
+.cv-credit{display:grid;grid-template-columns:2fr 1fr 1fr;gap:calc(20*var(--u));border-top:1px solid var(--rule);padding-top:calc(12*var(--u));font:500 calc(13*var(--u))/1.45 var(--sans)}
 
-/* ---------- components ---------- */
-.toc{position:relative;display:flex;flex-direction:column;padding-left:calc(30*var(--u))}
-.toc::before{content:"";position:absolute;left:calc(7*var(--u));top:calc(8*var(--u));bottom:calc(8*var(--u));width:calc(6*var(--u));background:var(--signal);border-radius:calc(3*var(--u))}
-.toc .part{font:800 calc(12.5*var(--u))/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt);margin:calc(16*var(--u)) 0 calc(6*var(--u))}
+/* contents */
+.toc{display:flex;flex-direction:column}
+.toc .part{font:700 calc(13*var(--u))/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);margin:calc(18*var(--u)) 0 calc(4*var(--u))}
 .toc .part:first-child{margin-top:0}
-.toc .stp{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:calc(10*var(--u));padding:calc(7*var(--u)) 0;border-bottom:1px solid var(--line)}
-.toc .stp::before{content:"";position:absolute;left:calc(-28*var(--u));top:calc(11*var(--u));width:calc(12*var(--u));height:calc(12*var(--u));border-radius:50%;background:var(--paper);border:calc(3*var(--u)) solid var(--ink)}
-.toc .stp span{font:700 calc(16*var(--u))/1.2 var(--sans)}
-.toc .stp small{grid-column:1;font:400 calc(13*var(--u))/1.35 var(--serif);color:var(--muted)}
-.toc .stp em{grid-row:1/span 2;grid-column:2;font:800 calc(22*var(--u))/1 var(--display);font-style:normal;align-self:center}
+.toc .stp{display:flex;justify-content:space-between;align-items:baseline;gap:calc(10*var(--u));padding:calc(8*var(--u)) 0;border-bottom:1px solid var(--rule);font:500 calc(16.5*var(--u))/1.25 var(--sans)}
+.toc .stp i{font-style:normal;color:var(--muted);margin-right:calc(8*var(--u))}
+.toc .stp em{font:700 calc(16.5*var(--u))/1 var(--sans);font-style:normal}
 
-.vtl{position:relative;display:flex;flex-direction:column;gap:calc(18*var(--u));padding-left:calc(34*var(--u))}
-.vtl::before{content:"";position:absolute;left:calc(8*var(--u));top:calc(10*var(--u));bottom:calc(10*var(--u));width:calc(6*var(--u));background:var(--signal);border-radius:calc(3*var(--u))}
-.vtl>div{position:relative;display:flex;flex-direction:column;gap:calc(2*var(--u))}
-.vtl>div::before{content:"";position:absolute;left:calc(-34*var(--u));top:calc(10*var(--u));width:calc(16*var(--u));height:calc(16*var(--u));border-radius:50%;background:var(--paper);border:calc(4*var(--u)) solid var(--ink)}
-.vtl b{font:800 calc(30*var(--u))/1 var(--display)}
-.vtl p{font-size:calc(14.5*var(--u));line-height:1.4}
-
-.vals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(12*var(--u))}
-.val{display:flex;flex-direction:column;gap:calc(10*var(--u));padding:calc(16*var(--u));background:var(--tint);border-top:calc(4*var(--u)) solid var(--cobalt)}
-.val .ic{font-size:calc(30*var(--u));color:var(--cobalt)}
-.val b{font:italic 700 calc(19*var(--u))/1.2 var(--display)}
-
-.urow{display:grid;grid-template-columns:calc(54*var(--u)) calc(170*var(--u)) minmax(0,1fr);gap:calc(16*var(--u));align-items:center;padding:calc(12*var(--u)) 0;border-bottom:1px solid var(--line)}
-.urow .ic{font-size:calc(40*var(--u));color:var(--cobalt)}
-.urow b{font:800 calc(22*var(--u))/1.1 var(--display)}
-.urow p{font-size:calc(14.5*var(--u));line-height:1.4}
-
-.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(8*var(--u))}
-.step{display:flex;flex-direction:column;gap:calc(8*var(--u))}
-.step .chev{background:var(--signal);color:var(--ink);padding:calc(10*var(--u)) calc(18*var(--u)) calc(10*var(--u)) calc(16*var(--u));clip-path:polygon(0 0,calc(100% - 12*var(--u)) 0,100% 50%,calc(100% - 12*var(--u)) 100%,0 100%,calc(12*var(--u)) 50%);font:800 calc(15*var(--u))/1.15 var(--sans);min-height:calc(58*var(--u));display:flex;align-items:center}
-.step:first-child .chev{clip-path:polygon(0 0,calc(100% - 12*var(--u)) 0,100% 50%,calc(100% - 12*var(--u)) 100%,0 100%)}
-.step i{font:800 calc(13*var(--u))/1 var(--sans);font-style:normal;color:var(--signal)}
-.step p{font-size:calc(13.5*var(--u));line-height:1.4;color:var(--on-ink)}
-.step.skip .chev{background:transparent;color:var(--on-ink);outline:2px dashed var(--signal);outline-offset:-2px}
-
-.ob{border:1.5px solid var(--ink);background:var(--paper);padding:calc(7*var(--u)) calc(8*var(--u));text-align:center}
-.ob b{display:block;font:700 calc(13*var(--u))/1.2 var(--sans)}
-.ob span{display:block;font:400 calc(12*var(--u))/1.25 var(--sans);color:var(--muted);margin-top:calc(2*var(--u))}
-.ob.lead-b{background:var(--ink);color:var(--on-ink)}
-.ob.lead-b span{color:var(--on-ink-mute)}
+/* components */
+.vtl{display:flex;flex-direction:column;border-left:3px solid var(--ink);padding-left:calc(20*var(--u));gap:calc(24*var(--u))}
+.vtl b{display:block;font:700 calc(24*var(--u))/1 var(--sans)}
+.vtl p{font-size:calc(17*var(--u));line-height:1.4;margin-top:calc(4*var(--u))!important}
+.urow{display:grid;grid-template-columns:calc(200*var(--u)) minmax(0,1fr);gap:calc(16*var(--u));padding:calc(18*var(--u)) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.urow b{font:600 calc(24*var(--u))/1.1 var(--serif)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(10*var(--u))}
+.step{display:flex;flex-direction:column;gap:calc(6*var(--u));border-top:3px solid var(--signal);padding-top:calc(10*var(--u))}
+.step b{font:700 calc(16.5*var(--u))/1.2 var(--sans)}
+.step p{font-size:calc(14*var(--u));line-height:1.4;color:var(--on-ink-mute)}
+.step.skip{border-top-style:dashed}
+.ob{border:1.5px solid var(--ink);padding:calc(7*var(--u)) calc(6*var(--u));text-align:center}
+.ob b{display:block;font:700 calc(14*var(--u))/1.2 var(--sans)}
+.ob span{display:block;font:500 calc(13*var(--u))/1.25 var(--sans);color:var(--muted);margin-top:calc(2*var(--u))}
+.ob.lead-b{background:var(--ink);color:var(--on-ink)}.ob.lead-b span{color:var(--on-ink-mute)}
 .org-top{display:grid;grid-template-columns:1fr minmax(0,1.3fr) 1fr;gap:calc(20*var(--u));align-items:end}
 .org-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(12*var(--u))}
 .org-col{display:flex;flex-direction:column;gap:calc(6*var(--u));position:relative;padding-top:calc(16*var(--u))}
 .org-col::before{content:"";position:absolute;top:0;left:50%;height:calc(16*var(--u));border-left:2px solid var(--ink)}
-.org-col .hd{background:var(--signal);font:800 calc(12.5*var(--u))/1.1 var(--sans);letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:calc(8*var(--u)) calc(4*var(--u))}
+.org-col .hd{font:700 calc(14*var(--u))/1.2 var(--sans);text-align:center;padding:calc(7*var(--u)) calc(4*var(--u));border-bottom:3px solid var(--ink)}
 .bus{height:calc(18*var(--u));margin:0 12.5%;border:2px solid var(--ink);border-bottom:0;position:relative}
 .bus::before{content:"";position:absolute;left:50%;top:calc(-20*var(--u));height:calc(20*var(--u));border-left:2px solid var(--ink)}
-
-.swot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(6*var(--u));flex:1}
-.sw{position:relative;padding:calc(20*var(--u));overflow:hidden;display:flex;flex-direction:column;gap:calc(6*var(--u))}
-.sw .L{position:absolute;right:calc(14*var(--u));bottom:calc(-30*var(--u));font:800 calc(190*var(--u))/1 var(--display);opacity:.16}
-.sw ul{margin:calc(6*var(--u)) 0 0;padding-left:calc(18*var(--u));display:flex;flex-direction:column;gap:calc(8*var(--u));font-size:calc(14.5*var(--u));line-height:1.4;position:relative}
-.sw.s{background:var(--cobalt);color:var(--on-ink)}
-.sw.w{background:var(--tint)}
-.sw.o{background:var(--signal)}
-.sw.t{background:var(--ink);color:var(--on-ink)}
-.sw .lab{color:inherit}
-
-.prob{display:grid;grid-template-columns:calc(56*var(--u)) minmax(0,1fr);gap:calc(16*var(--u));padding:calc(19*var(--u)) 0;border-bottom:1px solid var(--line)}
-.prob .m{font:italic 800 calc(48*var(--u))/1 var(--display);color:var(--cobalt)}
-.prob .h3{font-size:calc(19*var(--u))}
-.prob .ev{font:400 calc(14.5*var(--u))/1.45 var(--sans);color:var(--muted);margin-top:calc(4*var(--u))!important}
-.prob .re{display:flex;gap:calc(8*var(--u));align-items:baseline;margin-top:calc(6*var(--u))!important;font-size:calc(16*var(--u))}
-.prob .re b{font:800 calc(12*var(--u))/1.6 var(--sans);letter-spacing:.06em;background:var(--signal);padding:0 calc(6*var(--u));flex:none}
-
-.layer{display:grid;grid-template-columns:calc(52*var(--u)) minmax(0,1fr);gap:calc(16*var(--u));padding:calc(18*var(--u));border-left:calc(7*var(--u)) solid var(--cobalt);background:var(--tint)}
-.layer .ic{font-size:calc(40*var(--u));color:var(--cobalt)}
-.layer .h2{font-size:calc(26*var(--u))}
-
-.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(20*var(--u))}
-.kpi{border-top:calc(5*var(--u)) solid var(--ink);padding-top:calc(12*var(--u));display:flex;flex-direction:column;gap:calc(8*var(--u))}
-.kpi .v{font:800 calc(54*var(--u))/1 var(--display)}
-
-.card{border:1.5px solid var(--line);padding:calc(14*var(--u));display:flex;flex-direction:column;gap:calc(8*var(--u));background:var(--paper)}
-.card .top{display:flex;justify-content:space-between;align-items:center;gap:calc(6*var(--u))}
-.card .no{font:800 calc(22*var(--u))/1 var(--display);color:var(--cobalt)}
-.card p{font-size:calc(14*var(--u));line-height:1.42}
-.card.pipe{border:2px solid var(--cobalt)}
-.card.fut{border:2px dashed var(--ink)}
-
-.dot{display:inline-block;width:calc(14*var(--u));height:calc(14*var(--u));border-radius:50%;vertical-align:middle}
+.quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:2px solid var(--ink);flex:1}
+.quad>div{padding:calc(18*var(--u)) calc(20*var(--u)) calc(18*var(--u)) 0;display:flex;flex-direction:column;gap:calc(8*var(--u))}
+.quad>div:nth-child(2n){padding-left:calc(20*var(--u));padding-right:0;border-left:1px solid var(--rule)}
+.quad>div:nth-child(n+3){border-top:1px solid var(--rule)}
+.quad ul{margin:0;padding-left:calc(20*var(--u));display:flex;flex-direction:column;gap:calc(10*var(--u));font-size:calc(18*var(--u))}
+.prob{display:grid;grid-template-columns:calc(44*var(--u)) minmax(0,1fr);gap:calc(14*var(--u));padding:calc(22*var(--u)) 0;border-bottom:1px solid var(--rule)}
+.prob .m{font:700 calc(24*var(--u))/1.1 var(--sans);color:var(--cobalt)}
+.prob .ev{font:500 calc(15*var(--u))/1.45 var(--sans);color:var(--muted);margin-top:calc(4*var(--u))!important}
+.prob .re{margin-top:calc(6*var(--u))!important}
+.prob .re b{font-family:var(--sans)}
+.note{padding:calc(16*var(--u)) calc(20*var(--u));background:var(--tint);font-size:calc(17*var(--u));line-height:1.45}
+.note b{font-family:var(--sans)}
+.dot{display:inline-block;width:calc(15*var(--u));height:calc(15*var(--u));border-radius:50%;vertical-align:middle}
 .dot.full{background:var(--ink)}
 .dot.view{border:calc(3*var(--u)) solid var(--ink)}
 .dot.part{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);border:calc(2*var(--u)) solid var(--ink)}
 .dash{color:var(--muted);font-weight:700}
-.appr{display:inline-block;font:800 calc(12*var(--u))/1 var(--sans);background:var(--signal);border:1.5px solid var(--ink);padding:calc(2*var(--u)) calc(4*var(--u));vertical-align:middle;margin-left:calc(3*var(--u))}
-
-.chk{display:grid;grid-template-columns:calc(36*var(--u)) minmax(0,1fr);gap:calc(12*var(--u));padding:calc(12*var(--u)) 0;border-bottom:1px solid rgba(21,23,28,.25)}
-.chk .ic{font-size:calc(30*var(--u));color:var(--teal)}
-
-.swatch{display:grid;grid-template-columns:calc(46*var(--u)) minmax(0,1fr);gap:calc(12*var(--u));align-items:center;font-size:calc(14*var(--u));line-height:1.35}
-.swatch i{height:calc(30*var(--u));border:1.5px solid var(--ink)}
-
-.refs p{padding-left:2.2em;text-indent:-2.2em;font-size:calc(14*var(--u));line-height:1.55}
+.chk{display:grid;grid-template-columns:calc(30*var(--u)) minmax(0,1fr);gap:calc(10*var(--u));padding:calc(16*var(--u)) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.chk .ic{font-size:calc(22*var(--u));transform:translateY(calc(4*var(--u)))}
+.princ{display:grid;grid-template-columns:calc(40*var(--u)) minmax(0,1fr);gap:calc(12*var(--u));padding:calc(20*var(--u)) 0;border-bottom:1px solid var(--rule)}
+.princ>b{font:700 calc(24*var(--u))/1.1 var(--sans);color:var(--cobalt)}
+.refs p{padding-left:2.2em;text-indent:-2.2em;font-size:calc(16*var(--u));line-height:1.55}
 .refs p+p{margin-top:calc(12*var(--u))}
 .refs a{color:var(--cobalt);word-break:break-all}
-.back{position:absolute;left:0;right:0;bottom:0;height:calc(330*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) calc(30*var(--u));display:flex;flex-direction:column;justify-content:space-between}
+.back{position:absolute;left:0;right:0;bottom:0;height:calc(300*var(--u));background:var(--ink);color:var(--on-ink);padding:calc(34*var(--u)) calc(56*var(--u)) calc(30*var(--u));display:flex;flex-direction:column;justify-content:space-between}
 
 @media print{
   body{background:none;padding:0}
@@ -252,364 +190,279 @@ svg{display:block;max-width:100%}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-events" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M12 12.5l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z"/></symbol>
-  <symbol id="i-activ" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5"/><path d="M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0"/><path d="M5 12v9h14v-9M10 21v-5h4v5"/></symbol>
-  <symbol id="i-comms" viewBox="0 0 24 24"><path d="M3 10v4h4l8 5V5L7 10z"/><path d="M18.5 8.5a5 5 0 010 7"/><path d="M7 14l1.5 6h3L10 15.5"/></symbol>
-  <symbol id="i-digital" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 2 2 4-4"/></symbol>
-  <symbol id="i-prod" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M3 9l2.5-5 15 .1L21 9M8 4.1L10 9M13.5 4.1L15.5 9"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3 3 0 010 6M18 14.4c1.8.8 3 2.6 3 4.6"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
-  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"/><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 004 0"/></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="1.5"/><path d="M8 10V7a4 4 0 018 0v3M12 14.5V17"/></symbol>
-  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.2l2.7 2.7L16 9.5"/></symbol>
-  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17.2v.3"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
-  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0112 7.5 4.3 4.3 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
-  <symbol id="i-hdd" viewBox="0 0 24 24"><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M5 13l2.5-8h9L19 13"/><path d="M16.5 16.5h.01"/></symbol>
-  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
-  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
-  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
 </svg>
 
 
 <!-- =====================================================================
      STARTER PAGES. One <section class="sheet"> = one printed page.
-     Each page is labelled with its ARCHETYPE. Never put the same archetype
-     on two pages in a row. [Brackets] and class="tbd" mark placeholders.
+     Each page is labelled with its ARCHETYPE; never use the same one twice in a row.
+     Running heads carry the paper's own section numbers (I, II.1, III.3 ...).
+     [Brackets] mark placeholders; list every one on the Open items page.
      ===================================================================== -->
 
-<!-- ===================== ARCHETYPE: COVER ===================== -->
+<!-- ===== ARCHETYPE: COVER ===== -->
 <section class="sheet"><article class="page cover">
   <div class="cv-top">
-    <div class="cv-issue"><span>[Course code · Course title]</span><span>[Issue 01 · Deliverable]</span><span><span class="tbd">Month</span> [Year]</span></div>
+    <div class="cv-issue"><span>[Course · Course title]</span><span>[Issue · Deliverable]</span><span>[Month Year]</span></div>
     <div class="mast">MASTHEAD<span>+</span></div>
     <div class="cv-tag">[One line: what the paper reviews, and for which organization]</div>
-    <svg class="cv-route" viewBox="0 0 816 150" role="img" aria-label="Motif line connecting the main sections">
-      <path d="M0 104H250L300 54H730" class="f-none s-sig" stroke-width="12" stroke-linejoin="round"/>
-      <g class="f-paper s-ink" stroke-width="5"><circle cx="80" cy="104" r="11"/><circle cx="190" cy="104" r="11"/><circle cx="390" cy="54" r="11"/><circle cx="520" cy="54" r="11"/><circle cx="650" cy="54" r="11"/></g>
-      <g class="t-white" font-size="13" letter-spacing="1.2" text-anchor="middle"><text x="80" y="140">STOP ONE</text><text x="190" y="140">STOP TWO</text><text x="390" y="26">STOP THREE</text><text x="520" y="26">STOP FOUR</text><text x="650" y="26">STOP FIVE</text></g>
-      <rect x="730" y="31" width="62" height="46" rx="4" class="f-sig"/><text x="761" y="63" text-anchor="middle" font-size="24" class="t-ink t-disp">[X]</text>
+    <svg class="cv-route" viewBox="0 0 816 150" role="img" aria-label="Motif line connecting the main parts">
+      <path d="M0 104H250L300 54H730" class="f-none s-sig" stroke-width="10" stroke-linejoin="round"/>
+      <g class="f-paper s-ink" stroke-width="5"><circle cx="80" cy="104" r="10"/><circle cx="190" cy="104" r="10"/><circle cx="390" cy="54" r="10"/><circle cx="520" cy="54" r="10"/><circle cx="650" cy="54" r="10"/></g>
+      <g class="t-white" font-size="14" text-anchor="middle"><text x="80" y="140">[Stop]</text><text x="190" y="140">[Stop]</text><text x="390" y="28">[Stop]</text><text x="520" y="28">[Stop]</text><text x="650" y="28">[Stop]</text></g>
+      <rect x="730" y="32" width="60" height="44" rx="3" class="f-sig"/><text x="760" y="62" text-anchor="middle" font-size="22" class="t-ink">[X]</text>
     </svg>
     <h1 class="cv-head">[Cover headline: the main claim in under ten words]</h1>
-    <p class="cv-dek">[One sentence on what the reader will learn.]</p>
   </div>
   <div class="cv-bottom">
     <div class="cv-lines">
-      <div class="cv-line"><span class="board" style="align-self:flex-start">p. 00</span><span class="h3">[Cover line]</span><p>[Short teaser.]</p></div>
-      <div class="cv-line"><span class="board" style="align-self:flex-start">p. 00</span><span class="h3">[Cover line]</span><p>[Short teaser.]</p></div>
-      <div class="cv-line"><span class="board" style="align-self:flex-start">p. 00</span><span class="h3">[Cover line]</span><p>[Short teaser.]</p></div>
-      <div class="cv-line"><span class="board" style="align-self:flex-start">p. 00</span><span class="h3">[Cover line]</span><p>[Short teaser.]</p></div>
+      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
+      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
+      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
+      <div class="cv-line"><b>Page 00</b><span class="h2">[Cover line]</span></div>
     </div>
     <div class="cv-credit">
-      <div><div class="lab">Submitted by</div>[Surname, Given Name] · [Surname, Given Name] · [Surname, Given Name]</div>
+      <div><div class="lab">Submitted by</div>[Surname, Given Name] · [Surname, Given Name]</div>
       <div><div class="lab">Submitted to</div>[Instructor]</div>
       <div><div class="lab">Institution</div>[University]</div>
     </div>
   </div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: PANEL SPLIT (contents) ===================== -->
+<!-- ===== ARCHETYPE: PANEL SPLIT (contents) ===== -->
 <section class="sheet"><article class="page split">
   <div class="panel">
-    <div class="kicker">Issue 01</div>
-    <h1 class="h1 xl" style="color:var(--on-ink)">In this issue</h1>
-    <p class="dek" style="color:var(--on-ink-mute)">[One-line description of the issue.]</p>
-    <div class="stack" style="margin-top:auto;gap:calc(14*var(--u))">
-      <div><div class="stat" style="color:var(--signal)">00</div><div class="lab" style="color:var(--on-ink-mute)">[Key figure]</div></div>
+    <div class="caps" style="color:var(--signal)">[Issue]</div>
+    <h1 class="h1" style="font-size:calc(56*var(--u))">Contents</h1>
+    <p class="dek" style="color:var(--on-ink-mute)">Section numbers follow the course paper format.</p>
+    <div class="stack" style="margin-top:auto;gap:calc(18*var(--u))">
       <div><div class="stat" style="color:var(--signal)">00</div><div class="lab" style="color:var(--on-ink-mute)">[Key figure]</div></div>
       <div><div class="stat" style="color:var(--signal)">00</div><div class="lab" style="color:var(--on-ink-mute)">[Key figure]</div></div>
     </div>
   </div>
   <div class="mainc">
     <nav class="toc">
-      <div class="part">Part I · [Part]</div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>03</em></div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>04</em></div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>05</em></div>
-      <div class="part">Part II · [Part]</div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>06</em></div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>07</em></div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>08</em></div>
-      <div class="part">Part III · [Part]</div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>09</em></div>
-      <div class="stp"><span>[Section]</span><small>[Short description]</small><em>10</em></div>
-      <div class="stp"><span>References</span><small>Sources cited</small><em>11</em></div>
+      <div class="stp"><span><i>I</i>Executive summary</span><em>03</em></div>
+      <div class="part">II · [Part]</div>
+      <div class="stp"><span><i>1</i>[Section]</span><em>04</em></div>
+      <div class="stp"><span><i>2</i>[Section]</span><em>05</em></div>
+      <div class="part">III · [Part]</div>
+      <div class="stp"><span><i>1</i>[Section]</span><em>07</em></div>
+      <div class="stp"><span><i>2</i>[Section]</span><em>08</em></div>
+      <div class="part">IV · [Part]</div>
+      <div class="stp"><span><i>A</i>[Section]</span><em>10</em></div>
+      <div class="stp"><span><i>V</i>Conclusion</span><em>11</em></div>
+      <div class="stp"><span><i>VI</i>References</span><em>12</em></div>
     </nav>
   </div>
-  <div class="folio inv" style="left:calc(356*var(--u))"><span>[Running title]</span><b style="color:var(--ink)">02</b></div>
+  <div class="folio" style="left:calc(336*var(--u))"><span>[Running title]</span><b>02</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: FEATURE (summary, essay text) ===================== -->
+<!-- ===== ARCHETYPE: FEATURE (summary, conclusion) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>[Masthead · Issue]</span><span class="board">[Section]</span></div>
-  <div class="stack"><div class="kicker">[Kicker]</div><h1 class="h1">[Headline that states the finding, with an <em>italic emphasis</em>]</h1></div>
-  <div class="g" style="border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding-block:calc(14*var(--u))">
-    <div class="c3"><div class="stat num">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat num">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat num">00</div><div class="lab">[Label]</div></div>
-    <div class="c3"><div class="stat num">00</div><div class="lab">[Label]</div></div>
+  <div class="rh"><span>I · Executive summary</span><span>[Masthead · Issue]</span></div>
+  <h1 class="h1">[Headline that states the finding in one roman sentence]</h1>
+  <div class="g ruled" style="border-bottom:1px solid var(--rule);padding-bottom:calc(14*var(--u));--sz:38">
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
   </div>
   <div class="body cols2">
-    <p class="lead">[Paragraph one. The first letter becomes a drop cap.]</p>
+    <p class="lead">[Paragraph one. First letter becomes a drop cap.]</p>
     <p>[Paragraph two.]</p>
     <p>[Paragraph three.]</p>
   </div>
-  <p class="pull">[Pull quote: the one sentence a skimming reader should remember.]</p>
-  <div class="g" style="margin-top:auto">
-    <div class="c12 kicker">[Short list heading]</div>
-    <div class="c4 stack" style="gap:calc(4*var(--u))"><div class="stat">1</div><div class="h3">[Step]</div></div>
-    <div class="c4 stack" style="gap:calc(4*var(--u))"><div class="stat">2</div><div class="h3">[Step]</div></div>
-    <div class="c4 stack" style="gap:calc(4*var(--u))"><div class="stat">3</div><div class="h3">[Step]</div></div>
-  </div>
+  <div class="note" style="margin-top:auto"><b>Recommendation.</b> [One or two sentences.]</div>
   <div class="folio"><span>[Running title]</span><b>03</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: RAIL (table-led pages) ===================== -->
-<section class="sheet"><article class="page railed">
-  <div class="rh"><span>[Masthead · Issue]</span><span class="board">[Section]</span></div>
-  <div class="rail"><span>[Rail word]</span></div>
-  <div class="railmain">
-    <h1 class="h1" style="font-size:calc(46*var(--u))">[Headline]</h1>
-    <p class="dek">[Deck.]</p>
-    <table class="tbl big">
-      <thead><tr><th>[Column]</th><th>[Column]</th><th class="c">[Column]</th></tr></thead>
-      <tbody>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c"><span class="board">00</span></td></tr>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c"><span class="board">00</span></td></tr>
-        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c"><span class="board">00</span></td></tr>
-      </tbody>
-    </table>
-    <h2 class="h2">How to read this issue</h2>
-    <div class="g" style="row-gap:calc(10*var(--u))">
-      <div class="c6 swatch"><i style="background:var(--cobalt)"></i><span><b class="sans">Blue</b> · [meaning]</span></div>
-      <div class="c6 swatch"><i style="background:var(--signal)"></i><span><b class="sans">Yellow</b> · [meaning]</span></div>
-      <div class="c6 swatch"><i style="background:var(--orange)"></i><span><b class="sans">Orange</b> · [meaning]</span></div>
-      <div class="c6 swatch"><i class="tbd" style="outline-offset:0"></i><span><b class="sans">Striped</b> · still being confirmed</span></div>
-    </div>
-    <div class="note" style="margin-top:auto"><svg class="ic"><use href="#i-shield"/></svg><div><b>[Note title.]</b> [Note text.]</div></div>
-  </div>
-  <div class="folio" style="left:calc(180*var(--u))"><span>[Running title]</span><b>04</b></div>
-</article></section>
-
-<!-- ===================== ARCHETYPE: OPENER BAND (start of each part) ===================== -->
+<!-- ===== ARCHETYPE: OPENER BAND (first page of each part) ===== -->
 <section class="sheet"><article class="page flush">
   <div class="band">
-    <span class="ghost">I</span>
-    <span class="partno">Part I · [Part name]</span>
+    <span class="partno">II · [Part name]</span>
     <h1 class="h1 xl">[Part headline]</h1>
     <p class="dek">[Deck that frames the part.]</p>
+    <svg class="route" viewBox="0 0 704 30" aria-hidden="true"><path d="M0 15H704" class="s-sig" stroke-width="6"/><g class="s-sig" stroke-width="4"><circle cx="20" cy="15" r="8" class="f-ink"/><circle cx="240" cy="15" r="9" class="f-sig"/><circle cx="460" cy="15" r="8" class="f-ink"/><circle cx="684" cy="15" r="8" class="f-ink"/></g></svg>
   </div>
-  <div class="g" style="flex:1">
-    <div class="c5 stack" style="gap:calc(16*var(--u))">
-      <div class="big-stat">00</div>
-      <div class="lab" style="color:var(--ink)">[What the number counts]</div>
-      <p>[Short paragraph.]</p>
-    </div>
-    <div class="c7 stack" style="gap:calc(22*var(--u))">
-      <div class="stack" style="gap:calc(6*var(--u))"><div class="kicker">[Label]</div><p class="pull">[Quoted statement.]</p></div>
-      <div class="stack" style="gap:calc(6*var(--u))"><div class="kicker">[Label]</div><p class="pull">[Quoted statement.]</p></div>
-    </div>
+  <div class="g">
+    <div class="c5 stack"><div class="lab" style="color:var(--ink)">II.1 · [Section]</div><p>[Short paragraph.]</p></div>
+    <div class="c7 stack"><div class="lab">[Label]</div><p class="pull">[Quoted statement.]</p></div>
   </div>
-  <div class="folio"><span>[Running title]</span><b>05</b></div>
+  <div class="g ruled" style="margin-top:auto">
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+    <div class="c3"><div class="stat">00</div><div class="lab">[Label]</div></div>
+  </div>
+  <div class="folio"><span>[Running title]</span><b>04</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: HERO FIGURE (2x2 framework) ===================== -->
+<!-- ===== ARCHETYPE: HERO FIGURE (2x2 framework) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>Part I · [Part]</span><span class="board">[Section]</span></div>
-  <div class="stack"><div class="kicker">[Framework]</div><h1 class="h1">[Headline that names the placement]</h1></div>
+  <div class="rh"><span>II.2 · [Section]</span><span>[Framework, Author Year]</span></div>
+  <h1 class="h1">[Headline that names the placement]</h1>
   <div class="g">
     <div class="c7 fig">
       <svg viewBox="0 0 402 380" role="img" aria-label="Two-by-two matrix">
-        <rect x="60" y="6" width="166" height="160" class="f-sig"/><rect x="226" y="6" width="166" height="160" class="f-tint"/><rect x="60" y="166" width="166" height="160" class="f-tint"/><rect x="226" y="166" width="166" height="160" class="f-tint"/>
+        <rect x="60" y="6" width="166" height="160" class="f-cobs"/><rect x="226" y="6" width="166" height="160" class="f-tint"/><rect x="60" y="166" width="166" height="160" class="f-tint"/><rect x="226" y="166" width="166" height="160" class="f-tint"/>
         <path d="M226 6V326M60 166H392" class="s-paper" stroke-width="4"/><path d="M60 6V326H392" class="f-none s-ink" stroke-width="2"/>
-        <g font-size="19" class="t-ink t-disp"><text x="74" y="34">[Quadrant]</text><text x="240" y="34">[Quadrant]</text><text x="74" y="194">[Quadrant]</text><text x="240" y="194">[Quadrant]</text></g>
-        <g font-size="12.5" class="t-ink"><text x="74" y="54">[Gloss line]</text><text x="240" y="54">[Gloss line]</text><text x="74" y="214">[Gloss line]</text><text x="240" y="214">[Gloss line]</text></g>
-        <circle cx="160" cy="118" r="28" class="f-paper s-ink" stroke-width="3"/><text x="160" y="126" text-anchor="middle" font-size="22" class="t-ink t-disp">[X]</text>
-        <g font-size="12.5" class="t-ink"><text x="226" y="370" text-anchor="middle" font-weight="700">[X axis] →</text><text transform="translate(22 166) rotate(-90)" text-anchor="middle" font-weight="700">[Y axis] →</text></g>
+        <g font-size="20" class="t-ink t-serif"><text x="74" y="36">[Quadrant]</text><text x="240" y="36">[Quadrant]</text><text x="74" y="196">[Quadrant]</text><text x="240" y="196">[Quadrant]</text></g>
+        <circle cx="160" cy="120" r="26" class="f-cob"/><text x="160" y="127" text-anchor="middle" font-size="19" font-weight="700" class="t-white">[X]</text>
+        <g font-size="13" class="t-ink"><text x="226" y="372" text-anchor="middle" font-weight="700">[X axis] →</text><text transform="translate(22 166) rotate(-90)" text-anchor="middle" font-weight="700">[Y axis] →</text></g>
       </svg>
-      <div class="cap"><b>Fig. 1</b>[Caption (Author, Year).]</div>
+      <div class="cap"><b>Fig. 1</b>[Caption.]</div>
     </div>
-    <div class="c5 stack" style="gap:calc(16*var(--u))">
-      <div><div class="h3">[Point]</div><p>[Evidence.]</p></div>
+    <div class="c5 stack" style="gap:calc(18*var(--u))">
       <div><div class="h3">[Point]</div><p>[Evidence.]</p></div>
       <div><div class="h3">[Point]</div><p>[Evidence.]</p></div>
     </div>
   </div>
   <p class="pull">[Implication in one sentence.]</p>
   <div class="g" style="margin-top:auto">
-    <div class="c6 note"><svg class="ic"><use href="#i-link"/></svg><div><b>[Axis term]</b> [plain definition].</div></div>
-    <div class="c6 note"><svg class="ic"><use href="#i-layers"/></svg><div><b>[Axis term]</b> [plain definition].</div></div>
+    <div class="c6 ruled stack" style="gap:calc(6*var(--u))"><div class="h3">[Term]</div><p class="small">[Plain definition.]</p></div>
+    <div class="c6 ruled stack" style="gap:calc(6*var(--u))"><div class="h3">[Term]</div><p class="small">[Plain definition.]</p></div>
+  </div>
+  <div class="folio"><span>[Running title]</span><b>05</b></div>
+</article></section>
+
+<!-- ===== ARCHETYPE: SIDE COLUMN (table-led page) ===== -->
+<section class="sheet"><article class="page side">
+  <div class="rh"><span>II.3 · [Section]</span><span>[Topic]</span></div>
+  <div class="sidecol">
+    <h1 class="h1">[Headline]</h1>
+    <p class="dek">[Deck.]</p>
+    <p class="small">[Context sentence.]</p>
+  </div>
+  <div class="maincol">
+    <table class="tbl">
+      <thead><tr><th>[Column]</th><th>[Column]</th><th class="c">[Column]</th></tr></thead>
+      <tbody>
+        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
+        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
+        <tr><td class="k">[Item]</td><td>[Detail]</td><td class="c">[0]</td></tr>
+      </tbody>
+    </table>
+    <div class="stack ruled" style="margin-top:auto"><div class="h2">[Subhead]</div><p>[What this means.]</p></div>
   </div>
   <div class="folio"><span>[Running title]</span><b>06</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: ICON ROWS + BOTTOM BAND (categories + process) ===================== -->
+<!-- ===== ARCHETYPE: QUAD (SWOT or 2x2 lists) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>Part I · [Part]</span><span class="board">[Section]</span></div>
-  <h1 class="h1">[Headline]</h1>
-  <div>
-    <div class="urow"><svg class="ic"><use href="#i-events"/></svg><b>[Category]</b><p>[What it covers]</p></div>
-    <div class="urow"><svg class="ic"><use href="#i-activ"/></svg><b>[Category]</b><p>[What it covers]</p></div>
-    <div class="urow"><svg class="ic"><use href="#i-comms"/></svg><b>[Category]</b><p>[What it covers]</p></div>
-    <div class="urow" style="border-bottom:0"><svg class="ic"><use href="#i-digital"/></svg><b>[Category]</b><p>[What it covers]</p></div>
+  <div class="rh"><span>II.4 · SWOT and strategy</span><span>Business tools</span></div>
+  <div class="g" style="align-items:end"><h1 class="c7 h1">[SWOT headline]</h1><p class="c5 dek">[Where the points come from.]</p></div>
+  <div class="quad">
+    <div><span class="caps" style="color:var(--cobalt)">Strengths</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
+    <div><span class="caps" style="color:var(--cobalt)">Weaknesses</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
+    <div><span class="caps" style="color:var(--cobalt)">Opportunities</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
+    <div><span class="caps" style="color:var(--cobalt)">Threats</span><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul></div>
   </div>
-  <div class="band" style="margin-bottom:calc(-84*var(--u));padding-bottom:calc(84*var(--u));flex:1;padding-top:calc(30*var(--u))">
-    <div class="partno">[Process name]</div>
-    <div class="flow">
-      <div class="step"><div class="chev">1 · [Step]</div><p>[Who does what]</p></div>
-      <div class="step"><div class="chev">2 · [Step]</div><p>[Who does what]</p></div>
-      <div class="step skip"><div class="chev">3 · [Step]</div><p>[Exception]</p></div>
-      <div class="step"><div class="chev">4 · [Step]</div><p>[Who does what]</p></div>
-      <div class="step"><div class="chev">5 · [Step]</div><p>[Who does what]</p></div>
-    </div>
-  </div>
-  <div class="folio inv"><span>[Running title]</span><b>07</b></div>
+  <div class="folio"><span>[Running title]</span><b>07</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: DATA SPREAD (charts + table) ===================== -->
+<!-- ===== ARCHETYPE: DATA SPREAD (bars + table) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>Part II · [Part]</span><span class="board">[Section]</span></div>
-  <div class="g" style="align-items:end">
-    <div class="c7 stack"><div class="kicker">[Kicker]</div><h1 class="h1">[Headline with the key number]</h1></div>
-    <div class="c5 stack" style="background:var(--tint);padding:calc(16*var(--u));gap:calc(4*var(--u))">
-      <div class="lab">[Basis]</div>
-      <div class="stat num" style="font-size:calc(30*var(--u))">[A ÷ B]</div>
-      <div class="stat num" style="font-size:calc(30*var(--u));color:var(--cobalt)">= [Result]</div>
-      <p class="small mute">[Source.]</p>
-    </div>
-  </div>
+  <div class="rh"><span>III.3 · Cost-benefit analysis</span><span>Costs</span></div>
+  <div class="g" style="align-items:end"><h1 class="c7 h1">[Headline with the key number]</h1><div class="c5 note"><b>[Basis.]</b> [Formula and source.]</div></div>
   <div class="fig">
-    <svg viewBox="0 0 704 300" role="img" aria-label="Range bar chart">
-      <g class="s-line" stroke-width="1.5"><path d="M240 6V262M328 6V262M416 6V262M504 6V262M592 6V262M680 6V262"/></g>
-      <g font-size="15" font-weight="700" class="t-ink"><text x="0" y="30">[Item A]</text><text x="0" y="80">[Item B]</text><text x="0" y="130">[Item C]</text><text x="0" y="180">[Item D]</text></g>
-      <g class="f-cob"><rect x="486.8" y="16" width="123.3" height="28"/><rect x="425.1" y="66" width="61.7" height="28"/></g>
-      <g class="f-sig s-ink" stroke-width="1.5"><rect x="363.4" y="116" width="61.7" height="28"/><rect x="301.7" y="166" width="61.7" height="28"/></g>
-      <g font-size="13" font-weight="700" class="t-ink"><text x="548" y="35" text-anchor="middle" class="t-white">[value]</text><text x="494" y="85">[value]</text><text x="433" y="135">[value]</text><text x="371" y="185">[value]</text></g>
-      <g font-size="13" class="t-ink" text-anchor="middle"><text x="240" y="284">0</text><text x="328" y="284">1k</text><text x="416" y="284">2k</text><text x="504" y="284">3k</text><text x="592" y="284">4k</text><text x="680" y="284">5k</text></g>
+    <svg viewBox="0 0 704 200" role="img" aria-label="Range bar chart">
+      <g class="s-rule" stroke-width="1.5"><path d="M240 6V162M328 6V162M416 6V162M504 6V162M592 6V162M680 6V162"/></g>
+      <g font-size="15" font-weight="700" class="t-ink"><text x="0" y="30">[Item A]</text><text x="0" y="80">[Item B]</text><text x="0" y="130">[Item C]</text></g>
+      <rect x="486.8" y="16" width="123.3" height="28" class="f-cob"/><rect x="425.1" y="66" width="61.7" height="28" class="f-cob"/><rect x="363.4" y="116" width="61.7" height="28" class="f-paper s-ink" stroke-width="2"/>
+      <g font-size="13.5" font-weight="700" class="t-ink"><text x="548" y="35" text-anchor="middle" class="t-white">[value]</text><text x="494" y="85">[value]</text><text x="433" y="135">[value]</text></g>
+      <g font-size="13" class="t-ink" text-anchor="middle"><text x="240" y="186">0</text><text x="328" y="186">1k</text><text x="416" y="186">2k</text><text x="504" y="186">3k</text><text x="592" y="186">4k</text><text x="680" y="186">5k</text></g>
     </svg>
-    <div class="cap"><b>Fig. 2</b>[Caption. Colour key in words.] <span class="sample">Sample</span></div>
+    <div class="cap"><b>Fig. 2</b>[Caption with the colour and outline key in words.]</div>
   </div>
-  <div class="g" style="align-items:center">
-    <div class="c4 fig">
-      <svg viewBox="0 0 42 42" role="img" aria-label="Donut chart">
-        <circle cx="21" cy="21" r="15.915" class="f-none s-cob" stroke-width="7" stroke-dasharray="55 45" stroke-dashoffset="25"/>
-        <circle cx="21" cy="21" r="15.915" class="f-none s-sig" stroke-width="7" stroke-dasharray="10 90" stroke-dashoffset="-30"/>
-        <circle cx="21" cy="21" r="15.915" class="f-none s-ink" stroke-width="7" stroke-dasharray="35 65" stroke-dashoffset="-40"/>
-        <text x="21" y="23" text-anchor="middle" font-size="7" class="t-ink t-disp">[Total]</text>
-      </svg>
-    </div>
-    <div class="c8">
-      <table class="tbl big num">
-        <thead><tr><th>[Part]</th><th>[Amount]</th><th class="c">Share</th></tr></thead>
-        <tbody>
-          <tr><td class="k"><span class="dot" style="background:var(--cobalt)"></span> [Part]</td><td>[0]</td><td class="c">55%</td></tr>
-          <tr><td class="k"><span class="dot" style="background:var(--ink)"></span> [Part]</td><td>[0]</td><td class="c">35%</td></tr>
-          <tr><td class="k"><span class="dot" style="background:var(--signal);border:1.5px solid var(--ink)"></span> [Part]</td><td>[0]</td><td class="c">10%</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <table class="tbl num">
+    <thead><tr><th>[Assumption]</th><th class="c">[Case]</th><th class="c">[Case]</th><th class="c">[Case]</th></tr></thead>
+    <tbody>
+      <tr><td class="k">[Low]</td><td class="c">[0] <span style="color:var(--alert);font-weight:700">· below cost</span></td><td class="c">[0]</td><td class="c">[0]</td></tr>
+      <tr><td class="k">[Base]</td><td class="c k" style="background:var(--cobalt-soft)">[0]</td><td class="c">[0]</td><td class="c">[0]</td></tr>
+    </tbody>
+  </table>
+  <div class="g ruled" style="margin-top:auto">
+    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
+    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
+    <div class="c4"><div class="stat" style="--sz:36">[0]</div><div class="lab">[Label]</div></div>
   </div>
   <div class="folio"><span>[Running title]</span><b>08</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: HERO FIGURE (SWOT) ===================== -->
+<!-- ===== ARCHETYPE: HERO FIGURE (heat map) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>Part I · [Part]</span><span class="board">SWOT analysis</span></div>
-  <div class="g" style="align-items:end">
-    <div class="c7 stack"><div class="kicker">Business tools</div><h1 class="h1">[SWOT headline]</h1></div>
-    <p class="c5 dek">[Where the points come from.]</p>
-  </div>
-  <div class="swot">
-    <div class="sw s"><div class="lab">Strengths · internal</div><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul><span class="L">S</span></div>
-    <div class="sw w"><div class="lab">Weaknesses · internal</div><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul><span class="L">W</span></div>
-    <div class="sw o"><div class="lab">Opportunities · external</div><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul><span class="L">O</span></div>
-    <div class="sw t"><div class="lab">Threats · external</div><h2 class="h2">[Heading]</h2><ul><li>[Point]</li><li>[Point]</li><li>[Point]</li><li>[Point]</li></ul><span class="L">T</span></div>
-  </div>
-  <div class="folio"><span>[Running title]</span><b>09</b></div>
-</article></section>
-
-<!-- ===================== ARCHETYPE: HERO FIGURE (heat map) ===================== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>Part II · [Part]</span><span class="board">Risk analysis</span></div>
-  <div class="stack"><div class="kicker">Risk analysis</div><h1 class="h1">[Risk headline with a count]</h1></div>
+  <div class="rh"><span>III.4 · Risk analysis</span><span>Heat map</span></div>
+  <h1 class="h1">[Risk headline with a count]</h1>
   <div class="g">
     <div class="c7 fig">
       <svg viewBox="0 0 402 400" role="img" aria-label="Risk heat map">
-        <rect x="80" y="10" width="104" height="110" class="f-h2"/><rect x="184" y="10" width="104" height="110" class="f-h3"/><rect x="288" y="10" width="104" height="110" class="f-h4"/>
-        <rect x="80" y="120" width="104" height="110" class="f-h1"/><rect x="184" y="120" width="104" height="110" class="f-h2"/><rect x="288" y="120" width="104" height="110" class="f-h3"/>
-        <rect x="80" y="230" width="104" height="110" class="f-h1"/><rect x="184" y="230" width="104" height="110" class="f-h1"/><rect x="288" y="230" width="104" height="110" class="f-h2"/>
+        <g class="f-tint"><rect x="80" y="10" width="104" height="110"/><rect x="80" y="120" width="104" height="110"/><rect x="184" y="120" width="104" height="110"/><rect x="80" y="230" width="104" height="110"/><rect x="184" y="230" width="104" height="110"/><rect x="288" y="230" width="104" height="110"/></g>
+        <g class="f-cobs"><rect x="184" y="10" width="104" height="110"/><rect x="288" y="10" width="104" height="110"/><rect x="288" y="120" width="104" height="110"/></g>
         <path d="M184 10V340M288 10V340M80 120H392M80 230H392" class="s-paper" stroke-width="4"/>
-        <g font-size="12" font-weight="700" class="t-ink"><text x="88" y="28">3</text><text x="192" y="28">6</text><text x="296" y="28">9</text><text x="88" y="138">2</text><text x="192" y="138">4</text><text x="296" y="138">6</text><text x="88" y="248">1</text><text x="192" y="248">2</text><text x="296" y="248">3</text></g>
-        <circle cx="236" cy="65" r="18" class="f-ink"/><text x="236" y="70" text-anchor="middle" font-size="13" font-weight="800" class="t-white">R1</text>
-        <circle cx="236" cy="175" r="18" class="f-paper s-ink" stroke-width="2.5"/><text x="236" y="180" text-anchor="middle" font-size="13" font-weight="800" class="t-ink">R2</text>
-        <g font-size="13" class="t-ink" text-anchor="middle"><text x="132" y="360">Low</text><text x="236" y="360">Medium</text><text x="340" y="360">High</text><text x="236" y="390" font-weight="800">Likelihood →</text></g>
+        <circle cx="236" cy="65" r="18" class="f-ink"/><text x="236" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="t-white">R1</text>
+        <circle cx="236" cy="175" r="18" class="f-paper s-ink" stroke-width="2"/><text x="236" y="180" text-anchor="middle" font-size="13.5" font-weight="700" class="t-ink">R2</text>
+        <g font-size="13" class="t-ink" text-anchor="middle"><text x="132" y="360">Low</text><text x="236" y="360">Medium</text><text x="340" y="360">High</text><text x="236" y="390" font-weight="700">Likelihood →</text></g>
         <g font-size="13" class="t-ink" text-anchor="end"><text x="72" y="69">High</text><text x="72" y="179">Medium</text><text x="72" y="289">Low</text></g>
-        <text transform="translate(18 175) rotate(-90)" text-anchor="middle" font-size="13" font-weight="800" class="t-ink">Impact →</text>
+        <text transform="translate(18 175) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" class="t-ink">Impact →</text>
       </svg>
-      <div class="cap"><b>Fig. 3</b>Cell number = likelihood × impact. Darker cells are worse. Filled markers: priority.</div>
+      <div class="cap"><b>Fig. 3</b>Blue cells: high-impact zone. Filled circles: priority risks.</div>
     </div>
-    <div class="c5 stack" style="gap:calc(14*var(--u))">
-      <div class="note warn"><svg class="ic"><use href="#i-alert"/></svg><div><b>[Priority.]</b> [Which risks come first.]</div></div>
-      <div class="note"><svg class="ic"><use href="#i-clock"/></svg><div><b>[Observation.]</b> [Detail.]</div></div>
-    </div>
+    <div class="c5 stack" style="gap:calc(16*var(--u))"><p><b class="sans">[Priority.]</b> [Which risks come first.]</p><p><b class="sans">[Note.]</b> [Detail.]</p></div>
   </div>
-  <table class="tbl big">
+  <table class="tbl" style="font-size:calc(16.5*var(--u))">
     <thead><tr><th>Rating</th><th>Likelihood means</th><th>Impact means</th></tr></thead>
     <tbody><tr><td class="k">High</td><td>[Definition]</td><td>[Definition]</td></tr><tr><td class="k">Medium</td><td>[Definition]</td><td>[Definition]</td></tr><tr><td class="k">Low</td><td>[Definition]</td><td>[Definition]</td></tr></tbody>
+  </table>
+  <div class="folio"><span>[Running title]</span><b>09</b></div>
+</article></section>
+
+<!-- ===== ARCHETYPE: HERO FIGURE (Gantt roadmap) ===== -->
+<section class="sheet"><article class="page">
+  <div class="rh"><span>IV.D · Roadmap</span><span>[Years]</span></div>
+  <h1 class="h1">[Roadmap headline]</h1>
+  <div class="fig">
+    <svg viewBox="0 0 704 240" role="img" aria-label="Gantt chart by quarter">
+      <rect x="240" y="0" width="76" height="76" class="f-tint"/><rect x="316" y="0" width="228" height="76" class="f-cobs"/><rect x="544" y="0" width="152" height="76" class="f-tint"/>
+      <g font-size="13" font-weight="700" class="t-ink"><text x="246" y="18">Short</text><text x="322" y="18">Medium</text><text x="550" y="18">Long</text></g>
+      <g font-size="17" class="t-ink t-serif"><text x="246" y="44">[Y1]</text><text x="398" y="44">[Y2]</text><text x="550" y="44">[Y3]</text></g>
+      <g font-size="12.5" class="t-ink" text-anchor="middle"><text x="259" y="68">Q1</text><text x="297" y="68">Q2</text><text x="335" y="68">Q3</text><text x="373" y="68">Q4</text><text x="411" y="68">Q1</text><text x="449" y="68">Q2</text><text x="487" y="68">Q3</text><text x="525" y="68">Q4</text><text x="563" y="68">Q1</text><text x="601" y="68">Q2</text><text x="639" y="68">Q3</text><text x="677" y="68">Q4</text></g>
+      <g class="s-rule" stroke-width="1"><path d="M240 76V182M392 76V182M544 76V182M0 114H696M0 148H696M0 182H696"/></g>
+      <g font-size="14" class="t-ink"><text x="0" y="102">[Initiative]</text><text x="0" y="136">[Initiative]</text><text x="0" y="170">[Initiative]</text></g>
+      <rect x="242" y="88" width="72" height="20" class="f-paper s-ink" stroke-width="2"/><rect x="318" y="122" width="148" height="20" class="f-cob"/><rect x="470" y="156" width="110" height="20" class="f-paper s-ink" stroke-width="2" stroke-dasharray="5 3"/>
+      <g class="f-ink"><path d="M278 192l8 8-8 8-8-8z"/><path d="M392 192l8 8-8 8-8-8z"/></g>
+      <g font-size="13" font-weight="700" class="t-ink"><text x="0" y="206">Milestones</text><text x="278" y="232" text-anchor="middle">[Milestone]</text><text x="392" y="232" text-anchor="middle">[Gate]</text></g>
+    </svg>
+    <div class="cap"><b>Fig. 4</b>[Caption with the outline and fill key in words.]</div>
+  </div>
+  <table class="tbl" style="font-size:calc(17*var(--u))">
+    <thead><tr><th>Gate</th><th>Pass when</th><th>If not met</th></tr></thead>
+    <tbody><tr><td class="k">[Gate 1]</td><td>[Measurable condition]</td><td>[Action]</td></tr><tr><td class="k">[Gate 2]</td><td>[Measurable condition]</td><td>[Action]</td></tr></tbody>
   </table>
   <div class="folio"><span>[Running title]</span><b>10</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: HERO FIGURE (Gantt roadmap) ===================== -->
+<!-- ===== ARCHETYPE: INDEX (references + back cover) ===== -->
 <section class="sheet"><article class="page">
-  <div class="rh"><span>Part III · [Part]</span><span class="board">Roadmap</span></div>
-  <div class="stack"><div class="kicker">Implementation timeline</div><h1 class="h1">[Roadmap headline]</h1></div>
-  <div class="fig">
-    <svg viewBox="0 0 704 246" role="img" aria-label="Gantt chart by quarter">
-      <rect x="240" y="0" width="76" height="76" class="f-sig"/><rect x="316" y="0" width="228" height="76" class="f-cobs"/><rect x="544" y="0" width="152" height="76" class="f-tint"/>
-      <g font-size="12.5" font-weight="800" class="t-ink"><text x="246" y="18">SHORT</text><text x="322" y="18">MEDIUM</text><text x="550" y="18">LONG</text></g>
-      <g font-size="17" class="t-ink t-disp"><text x="246" y="44">[Y1]</text><text x="398" y="44">[Y2]</text><text x="550" y="44">[Y3]</text></g>
-      <g font-size="12" class="t-ink" text-anchor="middle"><text x="259" y="68">Q1</text><text x="297" y="68">Q2</text><text x="335" y="68">Q3</text><text x="373" y="68">Q4</text><text x="411" y="68">Q1</text><text x="449" y="68">Q2</text><text x="487" y="68">Q3</text><text x="525" y="68">Q4</text><text x="563" y="68">Q1</text><text x="601" y="68">Q2</text><text x="639" y="68">Q3</text><text x="677" y="68">Q4</text></g>
-      <g class="s-line" stroke-width="1"><path d="M0 114H696M0 148H696M0 182H696"/></g>
-      <g font-size="13.5" class="t-ink"><text x="0" y="102">[Initiative]</text><text x="0" y="136">[Initiative]</text><text x="0" y="170">[Initiative]</text></g>
-      <rect x="242" y="88" width="72" height="20" rx="2" class="f-sig s-ink" stroke-width="1.5"/>
-      <rect x="318" y="122" width="148" height="20" rx="2" class="f-cob"/>
-      <rect x="470" y="156" width="110" height="20" rx="2" class="f-paper s-ink" stroke-width="3"/>
-      <g class="f-ink"><path d="M278 194l8 8-8 8-8-8z"/><path d="M392 194l8 8-8 8-8-8z"/></g>
-      <g font-size="12.5" font-weight="700" class="t-ink"><text x="0" y="207">MILESTONES</text><text x="278" y="232" text-anchor="middle">[Milestone]</text><text x="392" y="232" text-anchor="middle">[Milestone]</text></g>
-    </svg>
-    <div class="cap"><b>Fig. 4</b>[Caption. Colour and outline key in words.] <span class="tbd">Confirm durations</span></div>
+  <div class="rh"><span>VI · References</span><span>[Masthead · Issue]</span></div>
+  <h1 class="h1">References</h1>
+  <div class="refs"><p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p><p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p></div>
+  <div class="back">
+    <div class="row" style="justify-content:space-between;align-items:flex-start"><div class="mast" style="font-size:calc(80*var(--u));margin:0">MASTHEAD<span>+</span></div><div class="lab" style="color:var(--on-ink-mute);text-align:right">[Issue]<br>[Deliverable]</div></div>
+    <svg viewBox="0 0 704 30" aria-hidden="true"><path d="M0 15H704" class="s-sig" stroke-width="6"/><g class="f-ink s-sig" stroke-width="4"><circle cx="20" cy="15" r="8"/><circle cx="240" cy="15" r="8"/><circle cx="460" cy="15" r="8"/><circle cx="684" cy="15" r="8"/></g></svg>
+    <div class="g" style="color:var(--on-ink);font:500 calc(14*var(--u))/1.4 var(--sans)"><div class="c6"><div class="lab" style="color:var(--signal)">Prepared by</div>[Surnames]</div><div class="c3"><div class="lab" style="color:var(--signal)">Course</div>[Course]</div><div class="c3"><div class="lab" style="color:var(--signal)">Subject</div>[Organization]</div></div>
   </div>
-  <table class="tbl big">
-    <thead><tr><th>Decision</th><th>Approves</th><th>Leads</th></tr></thead>
-    <tbody><tr><td>[Decision]</td><td class="k">[Role]</td><td><span class="tbd">confirm</span></td></tr><tr><td>[Decision]</td><td class="k">[Role]</td><td><span class="tbd">confirm</span></td></tr></tbody>
-  </table>
-  <div class="folio"><span>[Running title]</span><b>11</b></div>
 </article></section>
 
-<!-- ===================== ARCHETYPE: INDEX (references + back cover) ===================== -->
-<section class="sheet"><article class="page">
-  <div class="rh"><span>Back matter</span><span class="board">References</span></div>
-  <h1 class="h1">References</h1>
-  <div class="refs">
-    <p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p>
-    <p>[Author, A. A. (Year). <i>Title.</i> Publisher. URL]</p>
+<!-- ===== WORKING PAGE: OPEN ITEMS (delete before printing) ===== -->
+<section class="sheet"><article class="page side">
+  <div class="rh"><span>Working page</span><span>Delete before printing</span></div>
+  <div class="sidecol"><h1 class="h1">Open items</h1><p class="dek">Every [bracket] in this issue, in page order.</p></div>
+  <div class="maincol">
+    <table class="tbl"><thead><tr><th class="c">Page</th><th>Item</th><th>Source</th></tr></thead>
+      <tbody><tr><td class="c k">[00]</td><td>[What is missing]</td><td>[Who can confirm]</td></tr></tbody></table>
   </div>
-  <div class="back">
-    <div class="row" style="justify-content:space-between;align-items:flex-start">
-      <div class="mast" style="font-size:calc(80*var(--u));margin:0">MASTHEAD<span>+</span></div>
-      <div class="lab" style="color:var(--on-ink-mute);text-align:right">Issue 01<br>[Deliverable]</div>
-    </div>
-    <svg viewBox="0 0 704 40" aria-hidden="true"><path d="M0 20H704" class="s-sig" stroke-width="10"/><g class="f-paper s-ink" stroke-width="4"><circle cx="40" cy="20" r="9"/><circle cx="200" cy="20" r="9"/><circle cx="360" cy="20" r="9"/><circle cx="520" cy="20" r="9"/><circle cx="680" cy="20" r="9"/></g></svg>
-    <div class="g" style="color:var(--on-ink);font:500 calc(13.5*var(--u))/1.4 var(--sans)">
-      <div class="c6"><div class="lab" style="color:var(--signal)">Prepared by</div>[Surnames]</div>
-      <div class="c3"><div class="lab" style="color:var(--signal)">Course</div>[Course]</div>
-      <div class="c3"><div class="lab" style="color:var(--signal)">Subject</div>[Organization]</div>
-    </div>
-  </div>
+  <div class="folio"><span>[Running title]</span><b>12</b></div>
 </article></section>
